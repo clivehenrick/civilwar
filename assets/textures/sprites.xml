@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:e49af9535d2bf24e963815c502bd5fda$ -->
+<TextureAtlas imagePath="sprites.png">
+    <SubTexture name="forest" x="2" y="2" width="128" height="56"/>
+    <SubTexture name="grass" x="132" y="2" width="128" height="56"/>
+    <SubTexture name="rock" x="262" y="2" width="128" height="56"/>
+    <SubTexture name="sand" x="2" y="60" width="128" height="56"/>
+    <SubTexture name="water" x="132" y="60" width="128" height="56"/>
+</TextureAtlas>
