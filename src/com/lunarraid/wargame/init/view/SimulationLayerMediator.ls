@@ -13,6 +13,7 @@ package com.lunarraid.wargame.init.view
 		public static const NAME:String = "SimulationLayerMediator";
 		
 		private var _rootGroup:LoomGroup;
+		private var _simulationGroup:LoomGroup;
 		
 		public function SimulationLayerMediator( rootGroup:LoomGroup )
 		{
@@ -23,6 +24,15 @@ package com.lunarraid.wargame.init.view
 		{
 			super.onRegister();
 			
+			_simulationGroup = new loomGroup();
+			_simulationGroup.registerManager( new HexMapView() );
+			_simulationGroup.owningGroup = _rootGroup;
+			_simulationGroup.initialize();
+			
+        	var hexEntity:LoomGameObject = new LoomGameObject();
+        	hexEntity.owningGroup = _simulationGroup;
+        	hexEntity.addComponent( new HexRenderer() );
+        	hexEntity.initialize();
         	
         	
         	/*
