@@ -3,10 +3,14 @@ package com.lunarraid.wargame.init.view
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	import Loom.GameFramework.LoomGroup;
+	import Loom.GameFramework.LoomGameObject;
 	
 	import Loom2D.Textures.Texture;
 	import Loom2D.Display.Image;
 	import Loom2D.Math.Point;
+	
+	import com.lunarraid.wargame.simulation.view.HexMapView;
+	import com.lunarraid.wargame.simulation.view.HexRenderer;
 	
 	public class SimulationLayerMediator extends Mediator
 	{
@@ -17,22 +21,26 @@ package com.lunarraid.wargame.init.view
 		
 		public function SimulationLayerMediator( rootGroup:LoomGroup )
 		{
-			
+			_rootGroup = rootGroup;
 		}
 		
 		override public function onRegister():void
 		{
 			super.onRegister();
 			
-			_simulationGroup = new loomGroup();
-			_simulationGroup.registerManager( new HexMapView() );
+			var hexMapView:HexMapView = new HexMapView();
+			
+			_simulationGroup = new LoomGroup();
+			_simulationGroup.registerManager( hexMapView );
 			_simulationGroup.owningGroup = _rootGroup;
-			_simulationGroup.initialize();
+			_simulationGroup.initialize( "simulationGroup" );
 			
         	var hexEntity:LoomGameObject = new LoomGameObject();
         	hexEntity.owningGroup = _simulationGroup;
-        	hexEntity.addComponent( new HexRenderer() );
+        	hexEntity.addComponent( new HexRenderer(), "HexRenderer" );
         	hexEntity.initialize();
+        	
+        	setViewComponent( hexMapView.viewComponent );
         	
         	
         	/*
