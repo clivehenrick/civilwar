@@ -9,6 +9,8 @@ package com.lunarraid.wargame.init.view
 	import Loom2D.Display.Image;
 	import Loom2D.Math.Point;
 	
+	import Loom.Animation.Tween;
+	
 	import com.lunarraid.wargame.simulation.view.HexMapView;
 	import com.lunarraid.wargame.simulation.view.HexRenderer;
 	
@@ -37,11 +39,21 @@ package com.lunarraid.wargame.init.view
 			
         	var hexEntity:LoomGameObject = new LoomGameObject();
         	hexEntity.owningGroup = _simulationGroup;
-        	hexEntity.addComponent( new HexRenderer(), "HexRenderer" );
+        	
+        	for ( var i:int = 0; i<5; i++ )
+        	{
+        		for ( var j:int = 0; j < 5; j++ )
+        		{
+		        	var hexRenderer:HexRenderer = new HexRenderer();
+        			hexRenderer.x = i;
+        			hexRenderer.y = j;
+        			hexEntity.addComponent( hexRenderer, "HexRenderer" + Math.random() );
+        		}
+        	}
+        	
         	hexEntity.initialize();
         	
         	setViewComponent( hexMapView.viewComponent );
-        	
         	
         	/*
         	var tex:Texture = Texture.fromAsset( "assets/textures/pattern.png" );
