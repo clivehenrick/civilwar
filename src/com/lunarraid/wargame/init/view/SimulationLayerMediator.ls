@@ -40,20 +40,21 @@ package com.lunarraid.wargame.init.view
         	var hexEntity:LoomGameObject = new LoomGameObject();
         	hexEntity.owningGroup = _simulationGroup;
         	
-        	for ( var i:int = 0; i<5; i++ )
+        	for ( var i:int = 0; i<10; i++ )
         	{
-        		for ( var j:int = 0; j < 5; j++ )
+        		for ( var j:int = 0; j < 10; j++ )
         		{
 		        	var hexRenderer:HexRenderer = new HexRenderer();
         			hexRenderer.x = i;
         			hexRenderer.y = j;
-        			hexEntity.addComponent( hexRenderer, "HexRenderer" + Math.random() );
+        			hexEntity.addComponent( hexRenderer, "HexRenderer" + ( i * 10 + j ) );
         		}
         	}
         	
         	hexEntity.initialize();
         	
         	setViewComponent( hexMapView.viewComponent );
+        	
         	
         	/*
         	var tex:Texture = Texture.fromAsset( "assets/textures/pattern.png" );

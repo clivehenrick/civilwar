@@ -1,5 +1,7 @@
 package com.lunarraid.wargame.simulation.math
 {
+	import System.String;
+	
     public class Point3 
     {
         public var x:Number;
@@ -26,6 +28,11 @@ package com.lunarraid.wargame.simulation.math
         public function copyFrom( source:Point3 ):void
         {
         	setTo( source.x, source.y, source.z );
+        }
+        
+        public function toString():String
+        {
+        	return "x: " + x + ", y: " + y + ", z: " + z; 
         }
     }   
 }

@@ -13,8 +13,8 @@ package
         {
             super.run();
         	stage.scaleMode = StageScaleMode.LETTERBOX;
-        	stage.stageWidth = 640;
-        	stage.stageHeight = 960;
+        	stage.stageWidth = 960;
+        	stage.stageHeight = 640;
         	GameFacade.getInstance().sendNotification(StartupCommand.NAME, this);
         }
         
