@@ -146,6 +146,7 @@
             <filename>hextiles/rock.png</filename>
             <filename>hextiles/sand.png</filename>
             <filename>hextiles/water.png</filename>
+            <filename>hextiles/3dhex.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

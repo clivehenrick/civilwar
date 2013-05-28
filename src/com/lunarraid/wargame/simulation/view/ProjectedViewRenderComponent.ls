@@ -6,15 +6,26 @@ package com.lunarraid.wargame.simulation.view
 	import Loom2D.Display.Sprite;
 	import Loom.GameFramework.LoomComponent;
 	import com.lunarraid.wargame.simulation.math.Point3;
+	import Loom2D.UI.TextureAtlasSprite;
 	
-	public class HexRenderer extends LoomComponent
+	public class ProjectedViewRenderComponent extends LoomComponent
 	{
 		[Inject]
-		public var hexMapView:HexMapView;
+		public var hexMapView:ProjectedViewManager;
+		
+		private static const TILES:Vector.<String> = [ "water", "3dhex", "3dhex" ];
 	
-		private var _viewComponent:Image;
+		private var _viewComponent:TextureAtlasSprite;
 		private var _position:Point3 = new Point3();
 		private var _scratchPoint:Point3 = new Point3();
+		private var _textureName:String;
+		
+		
+		public function ProjectedViewRenderComponent( textureName:String="" )
+		{
+			_textureName = textureName != "" ? textureName : TILES[ int(Math.random() * TILES.length) ];
+		}
+		
 		
 		public function get viewComponent():DisplayObject { return _viewComponent; }
 		
@@ -48,10 +59,14 @@ package com.lunarraid.wargame.simulation.view
 		override public function onAdd():Boolean
 		{
 			super.onAdd();
-        	var tex:Texture = Texture.fromAsset( "assets/textures/pattern.png" );
-        	_viewComponent = new Image( tex );
+        	_viewComponent = new TextureAtlasSprite();
+        	_viewComponent.atlasName = "sprites";
+        	//_viewComponent.textureName = "3dhex";
+        	_viewComponent.textureName = _textureName;
         	_viewComponent.pivotX = _viewComponent.width * 0.5;
         	_viewComponent.pivotY = _viewComponent.height * 0.5;
+        	//_viewComponent.scaleX = Math.random() >= 0.5 ? 1 : -1;
+        	//_viewComponent.scaleY = Math.random() >= 0.5 ? 1 : -1;
         	hexMapView.addChild( this );
         	
         	return true;

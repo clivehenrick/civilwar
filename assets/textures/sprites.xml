@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:94ef2695b9b1ba1b9d7aa091eef7ea7c$ -->
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:f5236ad8ec8dd2c37f5202419b1fd387$ -->
 <TextureAtlas imagePath="sprites.png">
-    <SubTexture name="forest" x="2" y="2" width="128" height="56"/>
-    <SubTexture name="grass" x="132" y="2" width="128" height="56"/>
-    <SubTexture name="rock" x="262" y="2" width="128" height="56"/>
-    <SubTexture name="sand" x="2" y="60" width="128" height="56"/>
-    <SubTexture name="water" x="132" y="60" width="128" height="56"/>
+    <SubTexture name="3dhex" x="2" y="2" width="128" height="78"/>
+    <SubTexture name="building" x="132" y="2" width="96" height="79"/>
+    <SubTexture name="building2" x="2" y="83" width="96" height="82"/>
+    <SubTexture name="building3" x="100" y="83" width="96" height="83"/>
+    <SubTexture name="forest" x="2" y="168" width="128" height="56"/>
+    <SubTexture name="grass" x="2" y="226" width="128" height="56"/>
+    <SubTexture name="rock" x="2" y="284" width="128" height="56"/>
+    <SubTexture name="sand" x="2" y="342" width="128" height="56"/>
+    <SubTexture name="water" x="2" y="400" width="128" height="63"/>
 </TextureAtlas>
