@@ -86,6 +86,10 @@ package com.lunarraid.wargame.init.view
 	   			hexRenderer2.y = tempY;
 	   			hexRenderer2.z = -0.6;
 	   			hexEntity.addComponent( hexRenderer2, "ProjectedViewRenderComponent2" );
+	   			
+	   			trace( "Tile Depth : " + hexRenderer.viewComponent.depth );
+	   			trace( "Sprite Depth : " + hexRenderer2.viewComponent.depth );
+	   			trace( "Sprite Y: " + hexRenderer2.viewComponent.y );
 	   		}
    			
         	tempX++;

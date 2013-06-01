@@ -11,7 +11,7 @@ package com.lunarraid.wargame.simulation.view
 	public class ProjectedViewRenderComponent extends AnimatedComponent
 	{
 		[Inject]
-		public var hexMapView:ProjectedViewManager;
+		public var viewManager:ProjectedViewManager;
 		
 		private static const TILES:Vector.<String> = [ "water", "3dhex", "3dhex" ];
 	
@@ -65,14 +65,14 @@ package com.lunarraid.wargame.simulation.view
         	_viewComponent.textureName = _textureName;
         	_viewComponent.pivotX = _viewComponent.width * 0.5;
         	_viewComponent.pivotY = _viewComponent.height * 0.5;
-        	hexMapView.addChild( this );
-        	
+        	viewManager.addChild( this );
+        	updatePosition();
         	return true;
 		}
 		
 		override public function onRemove():void
 		{
-			hexMapView.removeChild( this );
+			viewManager.removeChild( this );
 			_viewComponent.dispose();
 			_viewComponent = null;
 			super.onRemove();
@@ -80,11 +80,12 @@ package com.lunarraid.wargame.simulation.view
 		
 		public function updatePosition():void
 		{
-			if ( !hexMapView ) return;
+			if ( !viewManager ) return;
 			_scratchPoint.copyFrom( _position );
-			hexMapView.project( _scratchPoint );
+			viewManager.project( _scratchPoint );
 			_viewComponent.x = _scratchPoint.x;
 			_viewComponent.y = _scratchPoint.y;
+			_viewComponent.depth = _scratchPoint.z * 100 - _position.z;
 		}
 	}
 }

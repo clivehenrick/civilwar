@@ -35,6 +35,7 @@ package com.lunarraid.wargame.simulation.view
 			timeManager.addAnimatedObject( this );
 			if ( _projection == null ) _projection = new HexProjection();
 			_viewComponent = new Sprite();
+			_viewComponent.depthSort = true;
 			_children = [];
 		}
 		
