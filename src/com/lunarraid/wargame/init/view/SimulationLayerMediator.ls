@@ -38,14 +38,13 @@ package com.lunarraid.wargame.init.view
 			_hexMapView = new ProjectedViewManager();
 			
 			_simulationGroup = new LoomGroup();
-			_simulationGroup.registerManager( _hexMapView );
 			_simulationGroup.owningGroup = _rootGroup;
 			_simulationGroup.initialize( "simulationGroup" );
+			_simulationGroup.registerManager( _hexMapView );
 			
         	setViewComponent( _hexMapView.viewComponent );
-        	_hexMapView.viewComponent.addEventListener( "touchDown", onTouch );
+        	_hexMapView.viewComponent.addEventListener( TouchEvent.TOUCH, onTouch );
         	
-        	onTouch();
         	onTouch();
         	
         	/*

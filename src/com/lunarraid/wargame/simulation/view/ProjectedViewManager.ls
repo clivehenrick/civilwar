@@ -7,13 +7,18 @@ package com.lunarraid.wargame.simulation.view
 	import System.Math;
 	import com.lunarraid.wargame.simulation.math.Point3;
 	import Loom.GameFramework.ILoomManager;
+	import Loom.GameFramework.IAnimated;
+	import Loom.GameFramework.TimeManager;
 	import com.lunarraid.wargame.simulation.view.projection.*;
 	
-	public class ProjectedViewManager implements ILoomManager
+	public class ProjectedViewManager implements ILoomManager, IAnimated
 	{
+        [Inject]
+        public var timeManager:TimeManager;
+	
 		private var _viewComponent:Sprite;
 		private var _children:Vector.<ProjectedViewRenderComponent>;
-		private var _projection:IProjection; 
+		private var _projection:IProjection;
 		
 		public function get viewComponent():DisplayObject { return _viewComponent; }
 		
@@ -27,15 +32,17 @@ package com.lunarraid.wargame.simulation.view
 		
 		public function initialize():void
 		{
+			timeManager.addAnimatedObject( this );
 			if ( _projection == null ) _projection = new HexProjection();
 			_viewComponent = new Sprite();
-			_viewComponent.addEventListener( EnterFrameEvent.ENTER_FRAME, onFrame );
 			_children = [];
 		}
 		
 		public function destroy():void
 		{
-			_viewComponent.removeEventListener( EnterFrameEvent.ENTER_FRAME, onFrame );
+			timeManager.removeAnimatedObject( this );
+			_viewComponent.dispose();
+			_viewComponent = null;
 		}
 		
 		public function addChild( child:ProjectedViewRenderComponent ):void
@@ -61,15 +68,8 @@ package com.lunarraid.wargame.simulation.view
 		public function project( position:Point3, modifyOriginal:Boolean=true ):Point3 { return _projection.project( position, modifyOriginal ); }
 		public function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3 { return _projection.unproject( position, modifyOriginal ); }
 		
-		private function onFrame( e:EnterFrameEvent ):void
+		private function onFrame( e:EnterFrameEvent=null ):void
 		{
-			//_children.sort( ySort );
-			//for each ( var child:ProjectedViewRenderComponent in _children ) _viewComponent.addChild( child.viewComponent );
-		}
-		
-		private function ySort( a:ProjectedViewRenderComponent, b:ProjectedViewRenderComponent ):int
-		{
-			return a.viewComponent.y - b.viewComponent.y;
 		}
 		
 		private function updateChildPositions():void

@@ -23,7 +23,7 @@ package com.lunarraid.wargame.simulation.view.projection
 			_tileSize = value;
 			_projectXMultiplier = _tileSize * N3D2;
 			_projectYMultiplier = _tileSize * HALF_SQRT3;
-			_unprojectXMultiplier = 1 / ( N3D2 / _tileSize );
+			_unprojectXMultiplier = 1 / ( N3D2 * _tileSize );
 			_unprojectYMultiplier = 1 / _projectYMultiplier;
 		}
 		
@@ -34,16 +34,18 @@ package com.lunarraid.wargame.simulation.view.projection
 			var result:Point3 = modifyOriginal ? position : new Point3();
 			var resultX:Number = position.x * _projectXMultiplier;
 			var resultY:Number = ( position.x * 0.5 + position.y + position.z ) * _projectYMultiplier;
-			result.setTo( resultX, resultY, position.z );
+			var resultZ:Number = resultY - position.z * _projectYMultiplier; 
+			result.setTo( resultX, resultY, resultZ );
 			return result;
 		}
 		
 		public function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3
 		{
 			var result:Point3 = modifyOriginal ? position : new Point3();
-			var resultX:Number = position.x / N3D2 / _tileSize;
-			var resultY:Number = ( position.y * _unprojectYMultiplier ) - ( resultX * 0.5 ) - position.z;
-			result.setTo( resultX, resultY, position.z );
+			var resultX:Number = position.x * _unprojectXMultiplier;
+			var resultZ:Number = ( position.y - position.z ) * _unprojectYMultiplier;
+			var resultY:Number = ( position.y * _unprojectYMultiplier ) - ( resultX * 0.5 ) - resultZ;
+			result.setTo( resultX, resultY, resultZ );
 			return result;
 		}
 	}

@@ -118,6 +118,11 @@
         <false/>
         <key>outputFormat</key>
         <enum type="SettingsBase::OutputFormat">RGBA8888</enum>
+        <key>contentProtection</key>
+        <struct type="ContentProtection">
+            <key>key</key>
+            <string></string>
+        </struct>
         <key>autoAliasEnabled</key>
         <true/>
         <key>trimSpriteNames</key>
@@ -147,10 +152,15 @@
             <filename>hextiles/sand.png</filename>
             <filename>hextiles/water.png</filename>
             <filename>hextiles/3dhex.png</filename>
+            <filename>building.png</filename>
+            <filename>building2.png</filename>
+            <filename>building3.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
         <key>replaceList</key>
+        <array/>
+        <key>ignoredWarnings</key>
         <array/>
         <key>commonDivisorX</key>
         <uint>1</uint>

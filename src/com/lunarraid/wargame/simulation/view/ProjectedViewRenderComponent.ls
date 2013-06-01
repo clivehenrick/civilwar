@@ -4,11 +4,11 @@ package com.lunarraid.wargame.simulation.view
 	import Loom2D.Display.Image;
 	import Loom2D.Display.DisplayObject;
 	import Loom2D.Display.Sprite;
-	import Loom.GameFramework.LoomComponent;
+	import Loom.GameFramework.AnimatedComponent;
 	import com.lunarraid.wargame.simulation.math.Point3;
 	import Loom2D.UI.TextureAtlasSprite;
 	
-	public class ProjectedViewRenderComponent extends LoomComponent
+	public class ProjectedViewRenderComponent extends AnimatedComponent
 	{
 		[Inject]
 		public var hexMapView:ProjectedViewManager;
@@ -23,6 +23,7 @@ package com.lunarraid.wargame.simulation.view
 		
 		public function ProjectedViewRenderComponent( textureName:String="" )
 		{
+			registerForUpdates = false;
 			_textureName = textureName != "" ? textureName : TILES[ int(Math.random() * TILES.length) ];
 		}
 		
@@ -61,12 +62,9 @@ package com.lunarraid.wargame.simulation.view
 			super.onAdd();
         	_viewComponent = new TextureAtlasSprite();
         	_viewComponent.atlasName = "sprites";
-        	//_viewComponent.textureName = "3dhex";
         	_viewComponent.textureName = _textureName;
         	_viewComponent.pivotX = _viewComponent.width * 0.5;
         	_viewComponent.pivotY = _viewComponent.height * 0.5;
-        	//_viewComponent.scaleX = Math.random() >= 0.5 ? 1 : -1;
-        	//_viewComponent.scaleY = Math.random() >= 0.5 ? 1 : -1;
         	hexMapView.addChild( this );
         	
         	return true;
