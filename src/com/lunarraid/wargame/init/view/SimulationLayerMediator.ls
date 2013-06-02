@@ -13,7 +13,8 @@ package com.lunarraid.wargame.init.view
 	import Loom.Animation.Tween;
 	
 	import com.lunarraid.wargame.simulation.view.ProjectedViewManager;
-	import com.lunarraid.wargame.simulation.view.ProjectedViewRenderComponent;
+	import com.lunarraid.wargame.simulation.view.ProjectedImageRenderComponent;
+	import com.lunarraid.wargame.simulation.view.projection.*;
 	
 	public class SimulationLayerMediator extends Mediator
 	{
@@ -44,6 +45,7 @@ package com.lunarraid.wargame.init.view
 			
         	setViewComponent( _hexMapView.viewComponent );
         	_hexMapView.viewComponent.addEventListener( TouchEvent.TOUCH, onTouch );
+        	//_hexMapView.projection = new IsoProjection();
         	
         	onTouch();
         	
@@ -72,24 +74,20 @@ package com.lunarraid.wargame.init.view
         	var hexEntity:LoomGameObject = new LoomGameObject();
         	hexEntity.owningGroup = _simulationGroup;
         	
-	       	var hexRenderer:ProjectedViewRenderComponent = new ProjectedViewRenderComponent();
+	       	var hexRenderer:ProjectedImageRenderComponent = new ProjectedImageRenderComponent();
    			hexRenderer.x = tempX;
    			hexRenderer.y = tempY;
-   			hexEntity.addComponent( hexRenderer, "ProjectedViewRenderComponent" );
+   			hexEntity.addComponent( hexRenderer, "ProjectedImageRenderComponent" );
         	
         	hexEntity.initialize();
         	
 	       	if ( int(Math.random() * 10) == 5 )
 	       	{
-		       	var hexRenderer2:ProjectedViewRenderComponent = new ProjectedViewRenderComponent("building");
+		       	var hexRenderer2:ProjectedImageRenderComponent = new ProjectedImageRenderComponent("building");
 	   			hexRenderer2.x = tempX;
 	   			hexRenderer2.y = tempY;
 	   			hexRenderer2.z = -0.6;
-	   			hexEntity.addComponent( hexRenderer2, "ProjectedViewRenderComponent2" );
-	   			
-	   			trace( "Tile Depth : " + hexRenderer.viewComponent.depth );
-	   			trace( "Sprite Depth : " + hexRenderer2.viewComponent.depth );
-	   			trace( "Sprite Y: " + hexRenderer2.viewComponent.y );
+	   			hexEntity.addComponent( hexRenderer2, "ProjectedImageRenderComponent2" );
 	   		}
    			
         	tempX++;

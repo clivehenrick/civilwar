@@ -22,6 +22,10 @@ package com.lunarraid.wargame.simulation.view
 		
 		public function get viewComponent():DisplayObject { return _viewComponent; }
 		
+		public function get projection():IProjection { return _projection; }
+		
+		public function set projection( value:IProjection ):void { _projection = value; }
+		
 		public function get tileSize():int { return _projection.tileSize; }
 		
 		public function set tileSize( value:int ):void

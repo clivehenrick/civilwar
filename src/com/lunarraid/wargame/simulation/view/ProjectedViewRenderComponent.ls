@@ -1,32 +1,30 @@
 package com.lunarraid.wargame.simulation.view
 {
-	import Loom2D.Textures.Texture;
-	import Loom2D.Display.Image;
 	import Loom2D.Display.DisplayObject;
-	import Loom2D.Display.Sprite;
 	import Loom.GameFramework.AnimatedComponent;
 	import com.lunarraid.wargame.simulation.math.Point3;
-	import Loom2D.UI.TextureAtlasSprite;
 	
 	public class ProjectedViewRenderComponent extends AnimatedComponent
 	{
+		//--------------------------------------
+		// INJECTIONS
+		//--------------------------------------
+		
 		[Inject]
 		public var viewManager:ProjectedViewManager;
 		
-		private static const TILES:Vector.<String> = [ "water", "3dhex", "3dhex" ];
-	
-		private var _viewComponent:TextureAtlasSprite;
-		private var _position:Point3 = new Point3();
-		private var _scratchPoint:Point3 = new Point3();
-		private var _textureName:String;
+		//--------------------------------------
+		// PRIVATE / PROTECTED
+		//--------------------------------------
+
+		protected var _viewComponent:DisplayObject;
+		protected var _position:Point3 = new Point3();
+		protected var _scratchPoint:Point3 = new Point3();
+		protected var _isDirty:Boolean = false;
 		
-		
-		public function ProjectedViewRenderComponent( textureName:String="" )
-		{
-			registerForUpdates = false;
-			_textureName = textureName != "" ? textureName : TILES[ int(Math.random() * TILES.length) ];
-		}
-		
+		//--------------------------------------
+		//  GETTER/SETTERS
+		//--------------------------------------
 		
 		public function get viewComponent():DisplayObject { return _viewComponent; }
 		
@@ -36,7 +34,7 @@ package com.lunarraid.wargame.simulation.view
 		{
 			if ( _position.x == value ) return;
 			_position.x = value;
-			updatePosition();
+			_isDirty = true;
 		}
 		
 		public function get y():Number { return _position.y; }
@@ -45,7 +43,7 @@ package com.lunarraid.wargame.simulation.view
 		{
 			if ( _position.y == value ) return;
 			_position.y = value;
-			updatePosition();
+			_isDirty = true;
 		}
 
 		public function get z():Number { return _position.z; }
@@ -54,28 +52,34 @@ package com.lunarraid.wargame.simulation.view
 		{
 			if ( _position.z == value ) return;
 			_position.z = value;
-			updatePosition();
+			_isDirty = true;
 		}
+		
+		//--------------------------------------
+		//  PUBLIC METHODS
+		//--------------------------------------
 		
 		override public function onAdd():Boolean
 		{
 			super.onAdd();
-        	_viewComponent = new TextureAtlasSprite();
-        	_viewComponent.atlasName = "sprites";
-        	_viewComponent.textureName = _textureName;
-        	_viewComponent.pivotX = _viewComponent.width * 0.5;
-        	_viewComponent.pivotY = _viewComponent.height * 0.5;
-        	viewManager.addChild( this );
+			_viewComponent = createDisplayObject();
         	updatePosition();
+        	viewManager.addChild( this );
         	return true;
 		}
 		
 		override public function onRemove():void
 		{
 			viewManager.removeChild( this );
-			_viewComponent.dispose();
+			if ( _viewComponent ) _viewComponent.dispose();
 			_viewComponent = null;
 			super.onRemove();
+		}
+		
+		override public function onFrame():void
+		{
+			super.onFrame();
+			if ( _isDirty ) updatePosition();
 		}
 		
 		public function updatePosition():void
@@ -86,6 +90,18 @@ package com.lunarraid.wargame.simulation.view
 			_viewComponent.x = _scratchPoint.x;
 			_viewComponent.y = _scratchPoint.y;
 			_viewComponent.depth = _scratchPoint.z * 100 - _position.z;
+			_isDirty = false;
 		}
+		
+		//--------------------------------------
+		//  PRIVATE / PROTECTED METHODS
+		//--------------------------------------
+		
+		protected function createDisplayObject():DisplayObject
+		{
+			// OVERRIDE THIS IN SUBCLASSES
+			return null;
+		}
+		
 	}
 }
