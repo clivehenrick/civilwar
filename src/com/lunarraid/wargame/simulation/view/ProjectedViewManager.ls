@@ -11,32 +11,39 @@ package com.lunarraid.wargame.simulation.view
 	import Loom.GameFramework.TimeManager;
 	import com.lunarraid.wargame.simulation.view.projection.*;
 	
-	public class ProjectedViewManager implements ILoomManager, IAnimated
+	public class ProjectedViewManager implements ILoomManager
 	{
-        [Inject]
-        public var timeManager:TimeManager;
-	
+		//--------------------------------------
+		// PRIVATE / PROTECTED
+		//--------------------------------------
+		
 		private var _viewComponent:Sprite;
 		private var _children:Vector.<ProjectedViewRenderComponent>;
 		private var _projection:IProjection;
 		
+		//--------------------------------------
+		//  GETTER/SETTERS
+		//--------------------------------------
+		
 		public function get viewComponent():DisplayObject { return _viewComponent; }
 		
 		public function get projection():IProjection { return _projection; }
-		
 		public function set projection( value:IProjection ):void { _projection = value; }
 		
-		public function get tileSize():int { return _projection.tileSize; }
+		public function get tileWidth():int { return _projection.tileWidth; }
 		
-		public function set tileSize( value:int ):void
+		public function set tileWidth( value:int ):void
 		{
-			_projection.tileSize = value;
+			_projection.tileWidth = value;
 			updateChildPositions();
 		}
 		
+		//--------------------------------------
+		//  PUBLIC METHODS
+		//--------------------------------------
+		
 		public function initialize():void
 		{
-			timeManager.addAnimatedObject( this );
 			if ( _projection == null ) _projection = new HexProjection();
 			_viewComponent = new Sprite();
 			_viewComponent.depthSort = true;
@@ -45,7 +52,8 @@ package com.lunarraid.wargame.simulation.view
 		
 		public function destroy():void
 		{
-			timeManager.removeAnimatedObject( this );
+			_viewComponent.removeChildren();
+			_children.length = 0;
 			_viewComponent.dispose();
 			_viewComponent = null;
 		}
@@ -73,9 +81,9 @@ package com.lunarraid.wargame.simulation.view
 		public function project( position:Point3, modifyOriginal:Boolean=true ):Point3 { return _projection.project( position, modifyOriginal ); }
 		public function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3 { return _projection.unproject( position, modifyOriginal ); }
 		
-		private function onFrame( e:EnterFrameEvent=null ):void
-		{
-		}
+		//--------------------------------------
+		//  PRIVATE / PROTECTED METHODS
+		//--------------------------------------
 		
 		private function updateChildPositions():void
 		{

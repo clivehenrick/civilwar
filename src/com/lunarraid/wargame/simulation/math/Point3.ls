@@ -20,6 +20,25 @@ package com.lunarraid.wargame.simulation.math
             this.z = z;
         }
         
+        public function dotProduct( source:Point3 ):Number
+        {
+        	return ( x * source.x ) + ( y * source.y ) + ( z * source.z );
+        }
+        
+        public function scaleBy( value:Number ):void
+        {
+        	x *= value;
+        	y *= value;
+        	z *= value;
+        }
+        
+        public function subtract( source:Point3 ):void
+        {
+        	x -= source.x;
+        	y -= source.y;
+        	z -= source.z;
+        }
+        
         public function clone():Point3
         {
         	return new Point3( x, y, z );
@@ -32,7 +51,7 @@ package com.lunarraid.wargame.simulation.math
         
         public function toString():String
         {
-        	return "x: " + x + ", y: " + y + ", z: " + z; 
+        	return "{ x: " + x + ", y: " + y + ", z: " + z + " }"; 
         }
     }   
 }

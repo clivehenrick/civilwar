@@ -4,8 +4,8 @@ package com.lunarraid.wargame.simulation.view.projection
 	
 	public interface IProjection
 	{
-		function set tileSize( value:int ):void;
-		function get tileSize():int;
+		function set tileWidth( value:int ):void;
+		function get tileWidth():int;
 		function project( position:Point3, modifyOriginal:Boolean=true ):Point3;
 		function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3;
 	}

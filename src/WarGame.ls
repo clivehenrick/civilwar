@@ -21,13 +21,6 @@ package
         	stage.stageWidth = 960;
         	stage.stageHeight = 640;
         	GameFacade.getInstance().sendNotification(StartupCommand.NAME, this);
-        	
-        	var isoProj:IsoProjection = new IsoProjection();
-        	for (var i:int=0; i<20; i++) {
-        		var tp:Point3 = new Point3( int(Math.random()*200-100), int(Math.random()*200-100), int(Math.random()*200-100) );
-        		trace( tp.toString() == isoProj.unproject(isoProj.project(tp)).toString() );
-        		//trace( tp.toString() + " : " + isoProj.unproject(isoProj.project(tp)).toString() );
-        	}
        }
         
         public function getStage():Stage { return stage; }
