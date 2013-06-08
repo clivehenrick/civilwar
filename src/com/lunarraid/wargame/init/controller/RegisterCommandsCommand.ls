@@ -1,6 +1,6 @@
 package com.lunarraid.wargame.init.controller
 {
-	import System.Debug;
+	import system.Debug;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	import org.puremvc.as3.interfaces.INotification;
 	

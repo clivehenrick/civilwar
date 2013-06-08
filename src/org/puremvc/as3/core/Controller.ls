@@ -4,8 +4,8 @@
 */
 package org.puremvc.as3.core
 {
-	import System.Reflection.Type;
-	import System.Dictionary;
+	import system.reflection.Type;
+	import system.Dictionary;
 	import org.puremvc.as3.core.*;
 	import org.puremvc.as3.interfaces.*;
 	import org.puremvc.as3.patterns.observer.*;

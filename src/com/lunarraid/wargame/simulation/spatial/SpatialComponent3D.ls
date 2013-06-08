@@ -1,6 +1,6 @@
 package com.lunarraid.wargame.simulation.spatial
 {
-    import Loom.GameFramework.TickedComponent;
+    import loom.gameframework.TickedComponent;
     import com.lunarraid.wargame.simulation.math.Point3;
     
     public class SpatialComponent3D extends TickedComponent
@@ -49,14 +49,14 @@ package com.lunarraid.wargame.simulation.spatial
         }	  
         
         
-        override public function onTick( tickRate:Number ):void
+        override public function onTick():void
         {
         	super.onTick();
         	
-            _position.x += velocity.x * tickRate;
-            _position.y += velocity.y * tickRate;
-            _position.z += velocity.z * tickRate;
-            rotation += angularVelocity * tickRate;
+            //_position.x += velocity.x * tickRate;
+            //_position.y += velocity.y * tickRate;
+            //_position.z += velocity.z * tickRate;
+            //rotation += angularVelocity * tickRate;
         }
         
         override protected function onAdd():Boolean

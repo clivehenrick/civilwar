@@ -1,8 +1,8 @@
 package com.lunarraid.wargame.init.model
 {
-	import System.Dictionary;
-	import System.JSON;
-	import System.Platform.File;
+	import system.Dictionary;
+	import system.JSON;
+	import system.platform.File;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	

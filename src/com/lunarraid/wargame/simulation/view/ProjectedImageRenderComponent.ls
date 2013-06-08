@@ -1,12 +1,12 @@
 package com.lunarraid.wargame.simulation.view
 {
-	import Loom2D.Textures.Texture;
-	import Loom2D.Display.Image;
-	import Loom2D.Display.DisplayObject;
-	import Loom2D.Display.Sprite;
-	import Loom.GameFramework.AnimatedComponent;
+	import loom2d.textures.Texture;
+	import loom2d.display.Image;
+	import loom2d.display.DisplayObject;
+	import loom2d.display.Sprite;
+	import loom.gameframework.AnimatedComponent;
 	import com.lunarraid.wargame.simulation.math.Point3;
-	import Loom2D.UI.TextureAtlasSprite;
+	import loom2d.ui.TextureAtlasSprite;
 	
 	public class ProjectedImageRenderComponent extends ProjectedViewRenderComponent
 	{

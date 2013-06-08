@@ -4,7 +4,7 @@
 */
 package org.puremvc.as3.interfaces
 {
-	import System.Reflection.Type;
+	import system.reflection.Type;
 
 	/**
 	 * The interface definition for a PureMVC Facade.

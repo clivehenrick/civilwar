@@ -1,6 +1,6 @@
 package com.lunarraid.wargame.init.model
 {
-	import Loom2D.UI.TextureAtlasManager;
+	import loom2d.ui.TextureAtlasManager;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	import org.puremvc.as3.interfaces.INotification;

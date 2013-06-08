@@ -1,7 +1,7 @@
 package com.lunarraid.wargame.simulation.view
 {
-	import Loom2D.Display.DisplayObject;
-	import Loom.GameFramework.AnimatedComponent;
+	import loom2d.display.DisplayObject;
+	import loom.gameframework.AnimatedComponent;
 	import com.lunarraid.wargame.simulation.math.Point3;
 	
 	public class ProjectedViewRenderComponent extends AnimatedComponent

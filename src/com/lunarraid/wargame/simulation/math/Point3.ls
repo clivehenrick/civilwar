@@ -1,6 +1,6 @@
 package com.lunarraid.wargame.simulation.math
 {
-	import System.String;
+	import system.String;
 	
     public class Point3 
     {

@@ -1,14 +1,14 @@
 package com.lunarraid.wargame.simulation.view
 {
-	import Loom2D.Display.DisplayObject;
-	import Loom2D.Display.Sprite;
-	import Loom2D.Events.EnterFrameEvent;
-	import Loom2D.Math.Point;
-	import System.Math;
+	import loom2d.display.DisplayObject;
+	import loom2d.display.Sprite;
+	import loom2d.events.EnterFrameEvent;
+	import loom2d.math.Point;
+	import system.Math;
 	import com.lunarraid.wargame.simulation.math.Point3;
-	import Loom.GameFramework.ILoomManager;
-	import Loom.GameFramework.IAnimated;
-	import Loom.GameFramework.TimeManager;
+	import loom.gameframework.ILoomManager;
+	import loom.gameframework.IAnimated;
+	import loom.gameframework.TimeManager;
 	import com.lunarraid.wargame.simulation.view.projection.*;
 	
 	public class ProjectedViewManager implements ILoomManager

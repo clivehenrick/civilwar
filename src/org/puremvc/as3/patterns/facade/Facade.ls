@@ -4,7 +4,7 @@
 */
 package org.puremvc.as3.patterns.facade
 {
-	import System.Reflection.Type;
+	import system.reflection.Type;
 
 	import org.puremvc.as3.core.*;
 	import org.puremvc.as3.interfaces.*;

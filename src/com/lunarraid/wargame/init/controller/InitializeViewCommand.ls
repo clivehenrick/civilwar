@@ -1,7 +1,7 @@
 package com.lunarraid.wargame.init.controller
 {
-	import Loom2D.Display.Stage;
-	import Loom2D.Display.Loom2DGame;
+	import loom2d.display.Stage;
+	import loom2d.display.Loom2DGame;
 	
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	import org.puremvc.as3.interfaces.INotification;

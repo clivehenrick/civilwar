@@ -2,15 +2,15 @@ package com.lunarraid.wargame.init.view
 {
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
-	import Loom.GameFramework.LoomGroup;
-	import Loom.GameFramework.LoomGameObject;
+	import loom.gameframework.LoomGroup;
+	import loom.gameframework.LoomGameObject;
 	
-	import Loom2D.Textures.Texture;
-	import Loom2D.Display.Image;
-	import Loom2D.Math.Point;
-	import Loom2D.Events.TouchEvent;
+	import loom2d.textures.Texture;
+	import loom2d.display.Image;
+	import loom2d.math.Point;
+	import loom2d.events.TouchEvent;
 	
-	import Loom.Animation.Tween;
+	import loom.animation.Tween;
 	
 	import com.lunarraid.wargame.simulation.view.ProjectedViewManager;
 	import com.lunarraid.wargame.simulation.view.ProjectedImageRenderComponent;
@@ -23,6 +23,8 @@ package com.lunarraid.wargame.init.view
 		private var _rootGroup:LoomGroup;
 		private var _simulationGroup:LoomGroup;
 		private var _hexMapView:ProjectedViewManager;
+		
+		private var _objects:Vector.<LoomGameObject> = [];
 		
 		private var tempX:int = 0;
 		private var tempY:int = 0;
@@ -71,6 +73,14 @@ package com.lunarraid.wargame.init.view
 		
 		private function onTouch( e:TouchEvent=null ):void
 		{
+        	if (tempY > 25)
+        	{
+        		while ( _objects.length > 0 ) _objects.pop().destroy();
+        		tempY = 0;
+        		_hexMapView.viewComponent.y = 50;
+        	}
+        	
+        	
         	var hexEntity:LoomGameObject = new LoomGameObject();
         	hexEntity.owningGroup = _simulationGroup;
         	
@@ -97,6 +107,8 @@ package com.lunarraid.wargame.init.view
         		tempY++;
         		_hexMapView.viewComponent.y -= 20;
         	}
+        	
+        	_objects.push( hexEntity );
 		}
 		
         private function getScale( texWidth:int, texHeight:int, targetWidth:int, targetHeight:int ):Point

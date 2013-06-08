@@ -1,7 +1,7 @@
 package com.lunarraid.wargame.init.view
 {
-	import Loom2D.Display.DisplayObject;
-	import Loom2D.Display.Stage;
+	import loom2d.display.DisplayObject;
+	import loom2d.display.Stage;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	import org.puremvc.as3.interfaces.IMediator;
 	

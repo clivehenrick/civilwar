@@ -1,16 +1,16 @@
 package
 {
-	import Loom2D.Display.StageScaleMode;
-	import Loom2D.Display.Stage;
-	import Loom2D.Display.Loom2DGame;
+	import loom2d.display.StageScaleMode;
+	import loom2d.display.Stage;
+	import loom2d.display.Loom2DGame;
     
     import com.lunarraid.wargame.GameFacade;
     import com.lunarraid.wargame.init.controller.StartupCommand;
     import com.lunarraid.wargame.simulation.view.projection.IsoProjection;
 	import com.lunarraid.wargame.simulation.math.Point3;
 	
-	import Loom2D.Display.*;
-	import Loom2D.UI.*;
+	import loom2d.display.*;
+	import loom2d.ui.*;
 
     public class WarGame extends Loom2DGame
     {

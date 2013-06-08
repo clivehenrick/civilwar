@@ -4,7 +4,7 @@
 */
 package org.puremvc.as3.patterns.command 
 {
-	import System.Reflection.Type;
+	import system.reflection.Type;
 
 	import org.puremvc.as3.interfaces.ICommand;
 	import org.puremvc.as3.interfaces.INotification;
