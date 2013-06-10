@@ -9,9 +9,9 @@ package com.lunarraid.wargame.init.controller
 	
 		override protected function initializeMacroCommand():void
 		{
-			addSubCommand(RegisterCommandsCommand);
-			addSubCommand(InitializeModelCommand);
-			addSubCommand(InitializeViewCommand);
+			addSubCommand( RegisterCommandsCommand );
+			addSubCommand( InitializeModelCommand );
+			addSubCommand( InitializeViewCommand );
 		}
 	}
 }

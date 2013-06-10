@@ -1,0 +1,34 @@
+INVENTORY COLLECTION
+
+{
+	"units" :
+	[
+		{
+			"type" : "goodUnit",
+			"quantity" : 100
+		},
+		{
+			"type" : "betterUnit",
+			"quantity" : 100
+		},
+		{
+			"type" : "bestUnit",
+			"quantity" : 100
+		}
+	], 
+	"items" : 
+	[
+		{
+			"type" : "changeName",
+			"quantity" : 0
+		}
+	],
+	"buildings" :
+	[
+		
+	],
+	"resources" : 
+	[
+	]	
+}
+

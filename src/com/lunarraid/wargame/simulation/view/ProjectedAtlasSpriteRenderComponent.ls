@@ -4,30 +4,31 @@ package com.lunarraid.wargame.simulation.view
 	import loom2d.display.Image;
 	import loom2d.display.DisplayObject;
 	import loom2d.display.Sprite;
-	import loom2d.display.Image;
 	import loom.gameframework.AnimatedComponent;
 	import com.lunarraid.wargame.simulation.math.Point3;
 	import loom2d.ui.TextureAtlasSprite;
 	
-	public class ProjectedImageRenderComponent extends ProjectedViewRenderComponent
+	public class ProjectedAtlasSpriteRenderComponent extends ProjectedViewRenderComponent
 	{
 		//--------------------------------------
 		// CLASS CONSTANTS
 		//--------------------------------------
 		
+		private static const TILES:Vector.<String> = [ "water", "3dhex", "3dhex" ];
+	
 		//--------------------------------------
 		// PRIVATE / PROTECTED
 		//--------------------------------------
-		
-		private var _url:String;
 
+		protected var _textureName:String;
+		
 		//--------------------------------------
 		// CONSTRUCTOR
 		//--------------------------------------
 		
-		public function ProjectedImageRenderComponent( url:String )
+		public function ProjectedAtlasSpriteRenderComponent( textureName:String="" )
 		{
-			_url = url;
+			_textureName = textureName != "" ? textureName : TILES[ int(Math.random() * TILES.length) ];
 		}
 		
 		//--------------------------------------
@@ -36,7 +37,9 @@ package com.lunarraid.wargame.simulation.view
 		
 		override protected function createDisplayObject():DisplayObject
 		{
-        	var result:Image = new Image( Texture.fromAsset( _url ) );
+        	var result:TextureAtlasSprite = new TextureAtlasSprite();
+        	result.atlasName = "sprites";
+        	result.textureName = _textureName;
         	result.pivotX = result.width * 0.5;
         	result.pivotY = result.height * 0.5;
         	return result;
