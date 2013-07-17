@@ -17,6 +17,8 @@ package com.lunarraid.wargame.init.view
 	import com.lunarraid.wargame.simulation.view.*;
 	import com.lunarraid.wargame.simulation.groups.*;
 	
+	import feathers.display.*;
+	
 	public class SimulationLayerMediator extends Mediator
 	{
 		public static const NAME:String = "SimulationLayerMediator";
@@ -40,27 +42,8 @@ package com.lunarraid.wargame.init.view
 			
         	_viewComponent = new Sprite();
         	_viewComponent.addChild( _simulationGroup.viewComponent );
+        	
         	setViewComponent( _viewComponent );
-		}
-		
-		private function createRepeatingBackground():void
-		{
-        	var tex:Texture = Texture.fromAsset( "assets/textures/pattern.png" );
-        	tex.repeat = true;
-        	
-        	var image:Image = new Image( tex );
-        	
-        	var targetScale:Point = getScale( image.width, image.height, 640, 480 );
-        	
-			image.setTexCoords(0, new Point(0, 0));
-			image.setTexCoords(1, new Point(targetScale.x, 0));
-			image.setTexCoords(2, new Point(0, targetScale.y));
-			image.setTexCoords(3, new Point(targetScale.x, targetScale.y));
-			
-			image.width = 640;
-			image.height = 480;
-			
-			setViewComponent( image );
 		}
 		
         private function getScale( texWidth:int, texHeight:int, targetWidth:int, targetHeight:int ):Point
