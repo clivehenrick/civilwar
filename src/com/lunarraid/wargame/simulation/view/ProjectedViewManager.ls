@@ -13,13 +13,14 @@ package com.lunarraid.wargame.simulation.view
 	
 	public class ProjectedViewManager implements ILoomManager
 	{
-		//--------------------------------------
+        //--------------------------------------
 		// PRIVATE / PROTECTED
 		//--------------------------------------
 		
 		private var _viewComponent:Sprite;
 		private var _children:Vector.<ProjectedViewRenderComponent>;
 		private var _projection:IProjection;
+		private var _depthSort:Boolean = true;
 		
 		//--------------------------------------
 		//  GETTER/SETTERS
@@ -34,8 +35,16 @@ package com.lunarraid.wargame.simulation.view
 		
 		public function set tileWidth( value:int ):void
 		{
-			_projection.tileWidth = value;
-			updateChildPositions();
+            _projection.tileWidth = value;
+            updateChildPositions();
+		}
+		
+		public function get depthSort():Boolean { return _depthSort; }
+		
+		public function set depthSort( value:Boolean ):void
+		{
+            _depthSort = value;
+            if ( _viewComponent ) _viewComponent.depthSort = value;
 		}
 		
 		//--------------------------------------
@@ -44,9 +53,9 @@ package com.lunarraid.wargame.simulation.view
 		
 		public function initialize():void
 		{
-			if ( _projection == null ) _projection = new HexProjection();
+			if ( _projection == null ) _projection = new OverheadHexProjection();
 			_viewComponent = new Sprite();
-			_viewComponent.depthSort = true;
+			_viewComponent.depthSort = _depthSort;
 			_children = [];
 		}
 		

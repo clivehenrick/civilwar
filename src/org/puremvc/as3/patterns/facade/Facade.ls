@@ -314,7 +314,7 @@ package org.puremvc.as3.patterns.facade
 		{
 			var proxy:IProxy;
 			if ( model != null ) proxy = model.removeProxy ( proxyName );	
-			return proxy
+			return proxy;
 		}
 
 		/**

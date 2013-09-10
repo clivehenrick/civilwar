@@ -16,7 +16,7 @@ package com.lunarraid.wargame.init.controller
 		{
 			trace( "INITIALIZING VIEW");
 			var warGame:WarGame = notification.getBody() as WarGame;
-			var stageMediator:StageMediator = new StageMediator( warGame.getStage() ); 
+			var stageMediator:StageMediator = new StageMediator(); 
 			facade.registerMediator( stageMediator );
 			var simulationLayerMediator:SimulationLayerMediator = new SimulationLayerMediator( warGame.group );
 			stageMediator.appendLayer( simulationLayerMediator );

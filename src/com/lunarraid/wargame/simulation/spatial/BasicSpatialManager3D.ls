@@ -7,9 +7,9 @@ package com.lunarraid.wargame.simulation.spatial
     {
       protected var _objectList:Vector.<SpatialComponent3D> = [];
       
-      public function initialize() {}
+      public function initialize():void {}
             
-      public function destroy() {}
+      public function destroy():void {}
             
       public function addSpatialObject( object:SpatialComponent3D ):void
       {

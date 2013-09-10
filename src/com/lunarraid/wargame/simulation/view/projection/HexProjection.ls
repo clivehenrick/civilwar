@@ -21,7 +21,7 @@ package com.lunarraid.wargame.simulation.view.projection
 		// CONSTRUCTOR
 		//--------------------------------------
 		
-		public function HexProjection() { tileWidth = 128; }
+		public function HexProjection() { tileWidth = 256; }
 		
 		//--------------------------------------
 		//  GETTER/SETTERS

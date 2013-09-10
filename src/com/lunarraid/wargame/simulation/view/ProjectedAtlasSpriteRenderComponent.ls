@@ -14,7 +14,7 @@ package com.lunarraid.wargame.simulation.view
 		// CLASS CONSTANTS
 		//--------------------------------------
 		
-		private static const TILES:Vector.<String> = [ "water", "3dhex", "3dhex" ];
+		private static const TILES:Vector.<String> = [ "plains", "forest", "water" ];
 	
 		//--------------------------------------
 		// PRIVATE / PROTECTED

@@ -14,7 +14,7 @@ package com.lunarraid.wargame.init.model
 		override public function onRegister():void
 		{
 			super.onRegister();
-			TextureAtlasManager.register("sprites", "assets/textures/");
+			TextureAtlasManager.register("sprites", "assets/textures/sprites.xml");
 		}
 	}
 }

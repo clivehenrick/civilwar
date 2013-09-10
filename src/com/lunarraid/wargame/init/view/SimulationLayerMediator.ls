@@ -10,8 +10,6 @@ package com.lunarraid.wargame.init.view
 	import loom2d.math.Point;
 	import loom2d.events.TouchEvent;
 	
-	import loom.animation.Tween;
-	
 	import com.lunarraid.wargame.simulation.view.ProjectedViewManager;
 	import com.lunarraid.wargame.simulation.view.ProjectedAtlasSpriteRenderComponent;
 	import com.lunarraid.wargame.simulation.view.*;
@@ -36,7 +34,7 @@ package com.lunarraid.wargame.init.view
 		{
 			super.onRegister();
 			
-			_simulationGroup = new IntermediateViewGroup();
+			_simulationGroup = new MapViewGroup();
 			_simulationGroup.owningGroup = _rootGroup;
 			_simulationGroup.initialize( "simulationGroup" );
 			
