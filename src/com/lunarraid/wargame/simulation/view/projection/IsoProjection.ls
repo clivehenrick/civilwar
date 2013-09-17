@@ -46,5 +46,11 @@ package com.lunarraid.wargame.simulation.view.projection
 			result.setTo( resultX, resultY, resultZ );
 			return result;
 		}
+		
+		function roundCoordinates( position:Point3, modifyOriginal:Boolean=true ):Point3
+		{
+			Debug.assert( false, "NOT YET IMPLEMENTED" );
+			return null;
+		}
 	}
 }

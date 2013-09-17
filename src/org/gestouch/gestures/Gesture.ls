@@ -262,7 +262,7 @@ package org.gestouch.gestures
 		 */
 		public function reflect():Type
 		{
-			throw Error("reflect() is abstract method and must be overridden.");
+			Debug.assert( false, "reflect() is abstract method and must be overridden." );
 			return null;
 		}
 		
@@ -357,11 +357,7 @@ package org.gestouch.gestures
 		public function requireGestureToFail(gesture:Gesture):void
 		{
 			//TODO
-			if (!gesture)
-			{
-				throw new ArgumentError();
-			}
-			
+			Debug.assert( gesture != null, "Gesture cannot be null." );
 			_gesturesToFail[gesture] = true;
 		}
 		
@@ -494,11 +490,7 @@ package org.gestouch.gestures
 				return true;
 			}
 			
-			if (!_state.gestouch_internal_canTransitionTo(newState))
-			{
-				throw new IllegalOperationError("You cannot change from state " +
-					_state + " to state " + newState  + ".");
-			}
+			Debug.assert( _state.gestouch_internal_canTransitionTo( newState ), "You cannot change from state " + _state + " to state " + newState  + "." ); 
 			
 			if (newState != GestureState.POSSIBLE)
 			{

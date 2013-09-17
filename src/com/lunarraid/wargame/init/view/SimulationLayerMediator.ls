@@ -1,6 +1,7 @@
 package com.lunarraid.wargame.init.view
 {
-	import org.puremvc.as3.patterns.mediator.Mediator;
+    import org.puremvc.as3.patterns.mediator.Mediator;
+    import org.puremvc.as3.patterns.facade.Facade;
 	
 	import loom.gameframework.LoomGroup;
 	import loom.gameframework.LoomGameObject;
@@ -33,6 +34,8 @@ package com.lunarraid.wargame.init.view
 		override public function onRegister():void
 		{
 			super.onRegister();
+			
+			_rootGroup.registerManager( facade, Facade );
 			
 			_simulationGroup = new MapViewGroup();
 			_simulationGroup.owningGroup = _rootGroup;

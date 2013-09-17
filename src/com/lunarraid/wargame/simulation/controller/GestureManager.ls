@@ -24,33 +24,39 @@ package com.lunarraid.wargame.simulation.controller
         private static const PAN_THRESHOLD_MS:int = 33;
         
         private var _panGesture:PanGesture;
-        private var _target:DisplayObject;
+        private var _touchTarget:DisplayObject;
+        private var _motionTarget:DisplayObject;
         
         private var _lastPanMS:int;
         private var _panDeltaTime:int;
         private var _lastPanDistance:Point;
         private var _panVelocity:Point;
         
-        public function GestureManager( target:DisplayObject = null )
+        public function GestureManager()
         {
-            trace( "ADDING PAN GESTURE TO " + target.toString() );
-            
-            _target = target;
-            _panGesture = new PanGesture( _target );
+            _panGesture = new PanGesture();
             _panGesture.maxNumTouchesRequired = 1;
             _panGesture.addEventListener( GestureEvent.GESTURE_BEGAN, onPanStart );
             _panGesture.addEventListener( GestureEvent.GESTURE_CHANGED, onPan );
             _panGesture.addEventListener( GestureEvent.GESTURE_ENDED, onPanEnd );
         }
         
-        public function set target( value:DisplayObject ):void
+        public function get touchTarget():DisplayObject { return _touchTarget; }
+        
+        public function set touchTarget( value:DisplayObject ):void
         {
-            _target = value;
+            _touchTarget = value;
             _panGesture.target = value;
         }
         
-        public function get target():DisplayObject { return _target; }
+        public function get motionTarget():DisplayObject { return _motionTarget; }
 
+        public function set motionTarget( value:DisplayObject ):void
+        {
+            if ( _motionTarget ) Loom2D.juggler.removeTweens( _motionTarget );
+            _motionTarget = value;
+        }
+        
         public function initialize():void
         {
         }
@@ -61,7 +67,7 @@ package com.lunarraid.wargame.simulation.controller
 
         private function onPanStart( e:GestureEvent ):void
         {
-            Loom2D.juggler.removeTweens( _target );
+            Loom2D.juggler.removeTweens( _motionTarget );
             _panDeltaTime = 0;
             _panVelocity.x = 0;
             _panVelocity.y = 0;
@@ -70,6 +76,8 @@ package com.lunarraid.wargame.simulation.controller
         
         private function onPan( e:GestureEvent ):void
         {
+            if ( !_motionTarget ) return;
+            
             var pan:PanGesture = e.target as PanGesture;
             
             var currentTime:int = Platform.getTime(); 
@@ -87,19 +95,21 @@ package com.lunarraid.wargame.simulation.controller
                 _panDeltaTime = 0;
             }
             
-            _target.x += pan.offsetX;
-            _target.y += pan.offsetY;
+            _motionTarget.x = Math.round( _motionTarget.x + pan.offsetX );
+            _motionTarget.y = Math.round( _motionTarget.y + pan.offsetY );
             
             _lastPanMS = currentTime;
         }
         
         private function onPanEnd( e:GestureEvent ):void
         {
-            var tweenTime:Number = Math.log( 0.8 ) * ( 1000 / _panVelocity.length );
+			return; // for now, fix inertial scroll later
+			           
+            if ( !_motionTarget ) return;
             
-            var tween:Tween = new Tween( _target, tweenTime, Transitions.EASE_OUT );
-            tween.animate( "x", _target.x + _panVelocity.x * 10 );
-            tween.animate( "y", _target.y + _panVelocity.y * 10 );
+            var tween:Tween = new Tween( _motionTarget, 1.0, Transitions.EASE_OUT );
+            tween.animate( "x", _motionTarget.x + _panVelocity.x * 10 );
+            tween.animate( "y", _motionTarget.y + _panVelocity.y * 10 );
             Loom2D.juggler.add(tween);            
         }
     }

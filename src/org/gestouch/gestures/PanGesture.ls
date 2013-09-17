@@ -43,8 +43,7 @@ package org.gestouch.gestures
 			if (_maxNumTouchesRequired == value)
 				return;
 			
-			if (value < minNumTouchesRequired)
-				throw ArgumentError("maxNumTouchesRequired must be not less then minNumTouchesRequired");
+			Debug.assert( value >= minNumTouchesRequired, "maxNumTouchesRequired must be not less then minNumTouchesRequired" );
 			
 			_maxNumTouchesRequired = value;
 		}
@@ -65,8 +64,7 @@ package org.gestouch.gestures
 			if (_minNumTouchesRequired == value)
 				return;
 			
-			if (value > maxNumTouchesRequired)
-				throw ArgumentError("minNumTouchesRequired must be not greater then maxNumTouchesRequired");
+			Debug.assert( value <= maxNumTouchesRequired, "minNumTouchesRequired must be not greater then maxNumTouchesRequired" );
 			
 			_minNumTouchesRequired = value;
 		}

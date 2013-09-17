@@ -23,11 +23,7 @@ package org.gestouch.input
 		{
 			super();
 			
-			if (!stage)
-			{
-				throw new ArgumentError("Stage must be not null.");
-			}
-			
+			Debug.assert( stage != null, "Stage must be not null." );
 			_stage = stage;
 		}
 		

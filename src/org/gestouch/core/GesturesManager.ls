@@ -59,16 +59,10 @@ package org.gestouch.core
 		
 		public function gestouch_internal_addGesture(gesture:Gesture):void
 		{
-			if (!gesture)
-			{
-				throw new ArgumentError("Argument 'gesture' must be not null.");
-			}
+			Debug.assert( gesture != null, "Argument 'gesture' must be not null." );
 			
 			const target:Object = gesture.target;
-			if (!target)
-			{
-				throw new IllegalOperationError("Gesture must have target.");
-			}
+			Debug.assert( target != null, "Gesture must have target." );
 			
 			var targetGestures:Vector.<Gesture> = _gesturesForTargetMap[target] as Vector.<Gesture>;
 			if (targetGestures)
@@ -107,11 +101,7 @@ package org.gestouch.core
 		
 		public function gestouch_internal_removeGesture(gesture:Gesture):void
 		{
-			if (!gesture)
-			{
-				throw new ArgumentError("Argument 'gesture' must be not null.");
-			}
-			
+			Debug.assert( gesture != null, "Argument 'gesture' must be not null." );
 			
 			var target:Object = gesture.target;
 			// check for target because it could be already GC-ed (since target reference is weak)
@@ -205,16 +195,13 @@ package org.gestouch.core
 			
 			var target:Object = touch.target;
 			const displayListAdapter:IDisplayListAdapter = Gestouch.gestouch_internal_getDisplayListAdapter(target);
-			if (!displayListAdapter)
-			{
-				throw new Error("Display list adapter not found for target of type '" + target.getFullTypeName() + "'.");
-			}
+			Debug.assert( displayListAdapter != null, "Display list adapter not found for target of type '" + target.getFullTypeName() + "'." );
+
 			const hierarchy:Vector.<Object> = displayListAdapter.getHierarchy(target);
 			const hierarchyLength:uint = hierarchy.length;
-			if (hierarchyLength == 0)
-			{
-				throw new Error("No hierarchy build for target '" + target +"'. Something is wrong with that IDisplayListAdapter.");
-			}
+			
+			Debug.assert( hierarchyLength != 0, "No hierarchy build for target '" + target +"'. Something is wrong with that IDisplayListAdapter." );
+			
 			if (_stage && !(hierarchy[hierarchyLength - 1] is Stage))
 			{
 				// Looks like some non-native (non DisplayList) hierarchy

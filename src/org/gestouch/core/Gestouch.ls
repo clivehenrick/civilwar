@@ -64,11 +64,7 @@ package org.gestouch.core
 		
 		public static function addDisplayListAdapter(targetClass:String, adapter:IDisplayListAdapter):void
 		{
-			if (!targetClass || !adapter)
-			{
-				throw new Error("Argument error: both arguments required.");
-			}
-			
+			Debug.assert( targetClass != null && adapter != null, "Argument error: both arguments required." );
 			_displayListAdaptersMap[targetClass] = adapter;
 		}
 		

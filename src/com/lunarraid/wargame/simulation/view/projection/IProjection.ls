@@ -8,5 +8,6 @@ package com.lunarraid.wargame.simulation.view.projection
 		function get tileWidth():int;
 		function project( position:Point3, modifyOriginal:Boolean=true ):Point3;
 		function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3;
+		function roundCoordinates( position:Point3, modifyOriginal:Boolean=true ):Point3;
 	}
 }

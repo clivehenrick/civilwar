@@ -28,11 +28,7 @@ package org.gestouch.core
 		
 		public function GestureState(name:String, isEndState:Boolean = false)
 		{
-			if (allStatesInitialized)
-			{
-				throw new IllegalOperationError("You cannot create gesture states." +
-				"Use predefined constats like GestureState.RECOGNIZED");
-			}
+			Debug.assert( !allStatesInitialized, "You cannot create gesture states. Use predefined constats like GestureState.RECOGNIZED" );
 			
 			this.name = "GestureState." + name;
 			this.eventType = "gesture" + name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();

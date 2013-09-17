@@ -1,5 +1,6 @@
 package com.lunarraid.wargame.simulation.view.chits
 {
+	import system.Number;
     import com.lunarraid.wargame.simulation.view.*;
     
     import loom2d.display.DisplayObject;
@@ -31,6 +32,37 @@ package com.lunarraid.wargame.simulation.view.chits
         private var _iconImage:Image;
         private var _healthBarFill:Sprite;
         private var _moraleBarFill:Sprite;
+        
+        private var _health:Number;
+        private var _morale:Number;
+        
+        //--------------------------------------
+        //  GETTERS / SETTERS
+        //--------------------------------------
+        
+        public function get health():Number
+        {
+        	return _health;
+        }
+        
+        public function set health( value:Number ):void
+        {
+        	if ( _health == value ) return;
+        	_health = value < 0 ? 0 : ( value > 1 ? 1 : value );
+        	_healthBarFill.rotation = Math.PI * value;
+        }
+        
+        public function get morale():Number
+        {
+        	return _morale;
+        }
+        
+        public function set morale( value:Number ):void
+        {
+        	if ( _morale == value ) return;
+        	_morale = value < 0 ? 0 : ( value > 1 ? 1 : value );
+        	_moraleBarFill.rotation = -Math.PI * ( 1 - value );
+        }
         
         //--------------------------------------
         //  PUBLIC METHODS
@@ -77,25 +109,25 @@ package com.lunarraid.wargame.simulation.view.chits
             var healthBarContainer:Sprite = new Sprite();
             healthBarContainer.addChild( createSpriteQuarter( "chit-fill", 0, 0x009900 ) );
             healthBarContainer.addChild( createSpriteQuarter( "chit-fill", 3, 0x009900 ) );
+            healthBarContainer.clipRect = healthBarContainer.getBounds( healthBarContainer );
             
             _healthBarFill = new Sprite();
             _healthBarFill.addChild( createSpriteQuarter( "chit-fill", 0, 0x00ff00 ) );
             _healthBarFill.addChild( createSpriteQuarter( "chit-fill", 3, 0x00ff00 ) );
-            _healthBarFill.clipRect = new Rectangle( 0, 0, 5, 5 );
+            
             healthBarContainer.addChild( _healthBarFill );
-            healthBarContainer.clipRect = healthBarContainer.getBounds( healthBarContainer );
             
             _displayObject.addChild( healthBarContainer );
             
             var moraleBarContainer:Sprite = new Sprite();
-            //moraleBarContainer.addChild( createSpriteQuarter( "chit-fill", 1, 0x990000 ) );
-            //moraleBarContainer.addChild( createSpriteQuarter( "chit-fill", 2, 0x990000 ) );
+            moraleBarContainer.addChild( createSpriteQuarter( "chit-fill", 1, 0x990000 ) );
+            moraleBarContainer.addChild( createSpriteQuarter( "chit-fill", 2, 0x990000 ) );
+            moraleBarContainer.clipRect = moraleBarContainer.getBounds( moraleBarContainer );
             
             _moraleBarFill = new Sprite();
-            //_moraleBarFill.addChild( createSpriteQuarter( "chit-fill", 1, 0xff0000 ) );
-            //_moraleBarFill.addChild( createSpriteQuarter( "chit-fill", 2, 0xff0000 ) );
+            _moraleBarFill.addChild( createSpriteQuarter( "chit-fill", 1, 0xff0000 ) );
+            _moraleBarFill.addChild( createSpriteQuarter( "chit-fill", 2, 0xff0000 ) );
             
-            moraleBarContainer.clipRect = moraleBarContainer.getBounds( moraleBarContainer );
             moraleBarContainer.addChild( _moraleBarFill );
             
             _displayObject.addChild( moraleBarContainer );
@@ -140,9 +172,9 @@ package com.lunarraid.wargame.simulation.view.chits
             starContainer.y = 46;
             
             _displayObject.addChild( starContainer );
-            
-            _healthBarFill.rotation = Math.PI / 4;
-            _moraleBarFill.rotation = -Math.PI / 4;
+			
+			health = 0.5;
+			morale = 0.75;            
         }
         
         private function clearRenderers():void
@@ -160,6 +192,8 @@ package com.lunarraid.wargame.simulation.view.chits
             result.pivotX = result.width - 0.5;
             result.pivotY = result.height - 0.5;
             result.rotation = ( Math.PI / 2 ) * position;
+            //result.scaleX = position == 0 || position == 3 ? 1 : -1;
+            //result.scaleY = position == 2 || position == 3 ? 1 : -1;
             
             if ( tint != 0xffffff ) result.color = tint;
             

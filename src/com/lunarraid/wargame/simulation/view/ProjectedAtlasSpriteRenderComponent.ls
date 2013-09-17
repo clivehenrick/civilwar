@@ -11,26 +11,40 @@ package com.lunarraid.wargame.simulation.view
 	public class ProjectedAtlasSpriteRenderComponent extends ProjectedViewRenderComponent
 	{
 		//--------------------------------------
-		// CLASS CONSTANTS
-		//--------------------------------------
-		
-		private static const TILES:Vector.<String> = [ "plains", "forest", "water" ];
-	
-		//--------------------------------------
 		// PRIVATE / PROTECTED
 		//--------------------------------------
 
-		protected var _textureName:String;
+		protected var _atlasName:String = "";
+		protected var _textureName:String = "";
 		
 		//--------------------------------------
 		// CONSTRUCTOR
 		//--------------------------------------
 		
-		public function ProjectedAtlasSpriteRenderComponent( textureName:String="" )
+		public function ProjectedAtlasSpriteRenderComponent()
 		{
-			_textureName = textureName != "" ? textureName : TILES[ int(Math.random() * TILES.length) ];
 		}
 		
+        //--------------------------------------
+        //  GETTERS / SETTERS
+        //--------------------------------------
+        
+        public function get atlasName():String { return _atlasName; }
+        
+        public function set atlasName( value:String ) :void
+        {
+            _atlasName = value;
+            if ( _viewComponent ) TextureAtlasSprite( _viewComponent ).atlasName = value;
+        }
+        
+        public function get textureName():String { return _textureName; }
+        
+        public function set textureName( value:String ) :void
+        {
+            _textureName = value;
+            if ( _viewComponent ) TextureAtlasSprite( _viewComponent ).textureName = value;
+        }
+        
 		//--------------------------------------
 		//  PRIVATE / PROTECTED METHODS
 		//--------------------------------------
@@ -38,10 +52,9 @@ package com.lunarraid.wargame.simulation.view
 		override protected function createDisplayObject():DisplayObject
 		{
         	var result:TextureAtlasSprite = new TextureAtlasSprite();
-        	result.atlasName = "sprites";
-        	result.textureName = _textureName;
-        	result.pivotX = result.width * 0.5;
-        	result.pivotY = result.height * 0.5;
+        	if ( _atlasName ) result.atlasName = _atlasName;
+        	if ( _textureName ) result.textureName = _textureName;
+        	result.center();
         	return result;
 		}
 	}

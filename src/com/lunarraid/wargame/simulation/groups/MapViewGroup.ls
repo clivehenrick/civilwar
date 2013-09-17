@@ -1,68 +1,84 @@
 package com.lunarraid.wargame.simulation.groups
 {
-	import loom.gameframework.*;
+    import loom2d.display.Quad;
+    import loom.gameframework.*;
     import loom2d.display.DisplayObject;
     import loom2d.display.Sprite;
-	
+    import loom2d.Loom2D;
+    
+    import org.puremvc.as3.patterns.facade.Facade;
+    
+    import com.lunarraid.wargame.model.MapProxy;
+    import com.lunarraid.wargame.model.MapHexTileVO;
+    
     import com.lunarraid.wargame.simulation.gameobjects.*;
     import com.lunarraid.wargame.simulation.controller.*;
-	import com.lunarraid.wargame.simulation.view.*;
-	
+    import com.lunarraid.wargame.simulation.view.*;
+    
     import com.lunarraid.wargame.simulation.view.chits.*;
-	
-	public class MapViewGroup extends LoomGroup implements ISimulationGroup
-	{
-		private var _hexMapView:ProjectedViewManager;
-		private var _gestureManager:GestureManager;
+    
+    public class MapViewGroup extends LoomGroup implements ISimulationGroup
+    {
+        private static const MAP_WIDTH:int = 20;
+        private static const MAP_HEIGHT:int = 20;
+        
+        private var _hexMapView:ProjectedViewManager;
+        private var _gestureManager:GestureManager;
         private var _viewComponent:Sprite;
-		
-		public function get viewComponent():DisplayObject { return _viewComponent; }
-		
-		override public function initialize( objectName:String ):void
-		{
-			super.initialize( objectName );
-			
-			_viewComponent = new Sprite();
-			
-			_gestureManager = new GestureManager( _viewComponent );
-			registerManager( _gestureManager );
-			
-			_hexMapView = new ProjectedViewManager();
-			_hexMapView.depthSort = false;
-			registerManager( _hexMapView );
-			_viewComponent.addChild( _hexMapView.viewComponent );
-			
-			var gameMap:LoomGameObject = new LoomGameObject();
+        
+        public function get viewComponent():DisplayObject { return _viewComponent; }
+        
+        override public function initialize( objectName:String ):void
+        {
+            super.initialize( objectName );
+            
+            _viewComponent = new Sprite();
+            
+            var bgQuad:Quad = new Quad( Loom2D.stage.nativeStageWidth, Loom2D.stage.nativeStageHeight, 0x000000 );
+            _viewComponent.addChildAt( bgQuad, 0 );
+            
+            _hexMapView = new ProjectedViewManager();
+            _hexMapView.depthSort = false;
+            registerManager( _hexMapView );
+            _viewComponent.addChild( _hexMapView.viewComponent );
+            
+            _gestureManager = new GestureManager();
+            _gestureManager.touchTarget = _viewComponent;
+            _gestureManager.motionTarget = _hexMapView.viewComponent;
+            registerManager( _gestureManager );
+            
+            var gameMap:LoomGameObject = new LoomGameObject();
             gameMap.owningGroup = this; 
-			gameMap.initialize( "GameMap" );
-			
-			for ( var x:int = 0; x < 2; x++ )
-			{
-                for ( var y:int = 0; y < 2; y++ )
+            gameMap.initialize( "GameMap" );
+            
+            var facade:Facade = getManager( Facade ) as Facade;
+            var mapProxy:MapProxy = facade.retrieveProxy( MapProxy.NAME ) as MapProxy;
+            var map:Dictionary.<int, MapHexTileVO> = mapProxy.tileMap;
+            
+            var i:int = 0;
+            
+            for each( var tile:MapHexTileVO in map )
+            {
+                var hexRenderer:ProjectedAtlasSpriteRenderComponent = new ProjectedAtlasSpriteRenderComponent();
+                hexRenderer.atlasName = "sprites";
+                hexRenderer.textureName = tile.terrain.assetId;
+                hexRenderer.x = tile.x;
+                hexRenderer.y = tile.y;
+                gameMap.addComponent( hexRenderer, "Renderer " + tile.x + " " + tile.y );
+                
+                if ( Math.round( Math.random() * 10 ) == 5 )
                 {
-                    if ( x & 1 && y == 1 ) continue;
-                    var hexRenderer:ProjectedAtlasSpriteRenderComponent = new ProjectedAtlasSpriteRenderComponent();
-                    hexRenderer.x = x;
-                    hexRenderer.y = y - Math.floor( x / 2 );
-                    gameMap.addComponent( hexRenderer, "Renderer " + x + " " + y );
+                    var chitComponent:ChitRenderComponent = new ChitRenderComponent();
+                    chitComponent.configure( "sprites", "blue", "infantry", "Brigade " + tile.x + "," + tile.y, "Cook", 3 ); 
+                    chitComponent.x = tile.x;
+                    chitComponent.y = tile.y;
+                    gameMap.addComponent( chitComponent, "Chit" + i );
+                    i++;
                 }
-			}
-			
-			var chitComponent:ChitRenderComponent = new ChitRenderComponent();
-			chitComponent.configure( "sprites", "blue", "infantry", "1st Brigade", "Cook", 3 ); 
-            chitComponent.x = 0;
-            chitComponent.y = 0;
-            gameMap.addComponent( chitComponent, "Chit" );
-			
-            _hexMapView.viewComponent.x = 100;
-            _hexMapView.viewComponent.y = 100;
+            }
+            
+            
             _hexMapView.viewComponent.scale = 0.7;
-			
-			/*
-			var backgroundPlate:StaticImageGameObject = new StaticImageGameObject( "assets/textures/backgrounds/bg1.png" );
-			backgroundPlate.owningGroup = this;
-			backgroundPlate.initialize( "background" );
-			*/
-		}
-	}
+        }
+    }
 }

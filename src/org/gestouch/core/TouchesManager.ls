@@ -51,10 +51,7 @@ package org.gestouch.core
 		
 		public function gestouch_internal_addTouchHitTester(touchHitTester:ITouchHitTester, priority:int = 0):void
 		{
-			if (!touchHitTester)
-			{
-				throw new ArgumentError("Argument must be non null.");
-			}
+			Debug.assert( touchHitTester != null, "Argument must be non null." );
 			
 			if (_hitTesters.indexOf(touchHitTester) == -1)
 			{
@@ -69,16 +66,10 @@ package org.gestouch.core
 		
 		public function gestouch_internal_removeInputAdapter(touchHitTester:ITouchHitTester):void
 		{
-			if (!touchHitTester)
-			{
-				throw new ArgumentError("Argument must be non null.");
-			}
+            Debug.assert( touchHitTester != null, "Argument must be non null." );
 			
 			var index:int = _hitTesters.indexOf(touchHitTester);
-			if (index == -1)
-			{
-				throw new Error("This touchHitTester is not registered.");
-			}
+			Debug.assert( index != -1 , "This touchHitTester is not registered." );
 			
 			_hitTesters.splice(index, 1);
 			_hitTesterPrioritiesMap.deleteKey(touchHitTester);
@@ -131,12 +122,8 @@ package org.gestouch.core
 					}
 				}
 			}
-			if (!target && !altTarget)
-			{
-				throw new Error("Not touch target found (hit test)." +
-				"Something is wrong, at least flash.display::Stage should be found." +
-				"See Gestouch#addTouchHitTester() and Gestouch#inputAdapter.");
-			}
+			
+			Debug.assert( target != null || altTarget != null, "Not touch target found (hit test). Something is wrong, at least flash.display::Stage should be found. See Gestouch#addTouchHitTester() and Gestouch#inputAdapter." );
 			
 			touch.target = target != null ? target : altTarget;
 			touch.gestouch_internal_setLocation(x, y, Platform.getTime());
@@ -216,7 +203,7 @@ package org.gestouch.core
 		 */
 		protected function hitTestersSorter(x:ITouchHitTester, y:ITouchHitTester):Number
 		{
-			const d:int = int(_hitTesterPrioritiesMap[x]) - int(_hitTesterPrioritiesMap[y]);
+			const d:int = Math.floor(_hitTesterPrioritiesMap[x]) - Math.floor(_hitTesterPrioritiesMap[y]);
 			if (d > 0)
 				return -1;
 			else if (d < 0)
