@@ -1,9 +1,12 @@
 package
 {
+	import loom.graphics.Graphics;
     import com.lunarraid.wargame.GameFacade;
     import com.lunarraid.wargame.init.controller.StartupCommand;
     import com.lunarraid.wargame.simulation.view.projection.IsoProjection;
 	import com.lunarraid.wargame.simulation.math.Point3;
+	
+	import loom.graphics.Graphics;
 	
 	import loom2d.math.Point;
 	
@@ -14,12 +17,11 @@ package
 
     public class WarGame extends Application
     {
-        private var _quad:Quad;
-    
         override public function run():void
         {
             super.run();
         	stage.scaleMode = StageScaleMode.NONE;
+        	Graphics.setDebug( Graphics.DEBUG_STATS | Graphics.DEBUG_TEXT );
         	GameFacade.getInstance().sendNotification( StartupCommand.NAME, this );
        }
     }

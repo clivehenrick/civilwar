@@ -114,7 +114,7 @@ package org.gestouch.gestures
 		
 		override protected function onTouchMove(touch:Touch):void
 		{
-			var prevLocation:Point = _location.clone();
+			var prevLocation:Point = _location;
 			updateLocation();
 			
 			var currTransformVector:Point;

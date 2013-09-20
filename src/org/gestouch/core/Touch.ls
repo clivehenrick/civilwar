@@ -36,13 +36,13 @@ package org.gestouch.core
 		protected var _location:Point;
 		public function get location():Point
 		{
-			return _location.clone();
+			return _location;
 		}
 		public function gestouch_internal_setLocation(x:Number, y:Number, time:uint):void
 		{
 			_location = new Point(x, y);
-			_beginLocation = _location.clone();
-			_previousLocation = _location.clone();
+			_beginLocation = _location;
+			_previousLocation = _location;
 			
 			_time = time;
 			_beginTime = time;
@@ -72,14 +72,14 @@ package org.gestouch.core
 		protected var _previousLocation:Point;
 		public function get previousLocation():Point
 		{
-			return _previousLocation.clone();
+			return _previousLocation;
 		}
 		
 		
 		protected var _beginLocation:Point;
 		public function get beginLocation():Point
 		{
-			return _beginLocation.clone();
+			return _beginLocation;
 		}
 		
 		

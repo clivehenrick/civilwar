@@ -14,6 +14,7 @@ package com.lunarraid.wargame.simulation.controller
     import org.gestouch.events.GestureEvent;
     import org.gestouch.gestures.ZoomGesture;
     import org.gestouch.gestures.PanGesture;
+    import org.gestouch.gestures.TapGesture;
     import org.gestouch.gestures.RotateGesture;
     
     import loom2d.animation.Tween;
@@ -24,8 +25,11 @@ package com.lunarraid.wargame.simulation.controller
         private static const PAN_THRESHOLD_MS:int = 33;
         
         private var _panGesture:PanGesture;
+        private var _tapGesture:TapGesture;
         private var _touchTarget:DisplayObject;
         private var _motionTarget:DisplayObject;
+        
+        private var _onTap:Function;
         
         private var _lastPanMS:int;
         private var _panDeltaTime:int;
@@ -39,7 +43,15 @@ package com.lunarraid.wargame.simulation.controller
             _panGesture.addEventListener( GestureEvent.GESTURE_BEGAN, onPanStart );
             _panGesture.addEventListener( GestureEvent.GESTURE_CHANGED, onPan );
             _panGesture.addEventListener( GestureEvent.GESTURE_ENDED, onPanEnd );
+            
+            _tapGesture = new TapGesture();
+            _tapGesture.numTapsRequired = 1;
+            _tapGesture.addEventListener( GestureEvent.GESTURE_RECOGNIZED, onTargetTap );            
         }
+        
+        public function get onTap():Function { return _onTap; }
+        
+        public function set onTap( value:Function ):void { _onTap = value; }
         
         public function get touchTarget():DisplayObject { return _touchTarget; }
         
@@ -47,6 +59,7 @@ package com.lunarraid.wargame.simulation.controller
         {
             _touchTarget = value;
             _panGesture.target = value;
+            _tapGesture.target = value;
         }
         
         public function get motionTarget():DisplayObject { return _motionTarget; }
@@ -111,6 +124,11 @@ package com.lunarraid.wargame.simulation.controller
             tween.animate( "x", _motionTarget.x + _panVelocity.x * 10 );
             tween.animate( "y", _motionTarget.y + _panVelocity.y * 10 );
             Loom2D.juggler.add(tween);            
+        }
+        
+        private function onTargetTap( e:GestureEvent ):void
+        {
+            if ( _onTap ) _onTap( TapGesture( e.target ).location );
         }
     }
 }

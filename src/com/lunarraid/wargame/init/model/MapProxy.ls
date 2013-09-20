@@ -1,5 +1,6 @@
 package com.lunarraid.wargame.model
 {
+	import system.platform.Platform;
     import org.puremvc.as3.patterns.proxy.Proxy;
     
     public class MapProxy extends Proxy
@@ -65,12 +66,17 @@ package com.lunarraid.wargame.model
         
         public function loadMap():void
         {
+            trace( "LOADING TILEMAP INTO MAPPROXY" );
+            var startTime:int = Platform.getTime();
+            
             _tileMap = {};
             
             var startX:int = Math.floor( -MAP_WIDTH / 2 );
             var endX:int = Math.floor( MAP_WIDTH / 2 );
             var startY:int = Math.floor( -MAP_HEIGHT / 2 );
             var endY:int = Math.floor( MAP_HEIGHT / 2 );
+            
+            var numChits:int = 0;
             
             for ( var x:int = startX; x < endX; x++ )
             {
@@ -82,9 +88,26 @@ package com.lunarraid.wargame.model
                     newTile.x = x;
                     newTile.y = y - Math.floor( x * 0.5 );
                     newTile.terrain = _tileTypes[ "plains" ];
+                    
+                    if ( numChits < 10 )
+                    {
+                        var occupant:ChitVO = new ChitVO();
+                        occupant.color = 0x1B70FE;
+                        occupant.name = "NAME";
+                        occupant.commander = "COMMANDER";
+                        occupant.experience = Math.floor( Math.random() * 3 ) + 1;
+                        occupant.health = Math.random(); 
+                        occupant.morale = Math.random();
+                        newTile.occupant = occupant;
+                        numChits++;
+                    }
+                    
                     _tileMap[ getHash( newTile.x, newTile.y ) ] = newTile;
                 }
             }
+            
+            trace( "MAP LOAD COMPLETED IN ", Platform.getTime() - startTime, " MILLISECONDS" );
+            
         }
         
         //--------------------------------------

@@ -37,7 +37,7 @@ package com.lunarraid.wargame.init.view
 			
 			_rootGroup.registerManager( facade, Facade );
 			
-			_simulationGroup = new MapViewGroup();
+			_simulationGroup = new MapSimulator();
 			_simulationGroup.owningGroup = _rootGroup;
 			_simulationGroup.initialize( "simulationGroup" );
 			

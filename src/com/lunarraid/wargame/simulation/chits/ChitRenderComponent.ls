@@ -1,4 +1,4 @@
-package com.lunarraid.wargame.simulation.view.chits
+package com.lunarraid.wargame.simulation.chits
 {
 	import system.Number;
     import com.lunarraid.wargame.simulation.view.*;
@@ -6,8 +6,6 @@ package com.lunarraid.wargame.simulation.view.chits
     import loom2d.display.DisplayObject;
     import loom2d.display.Image;
     import loom2d.display.Sprite;
-    
-    import loom2d.ui.SimpleLabel;
     
     import loom2d.ui.TextureAtlasSprite;
     
@@ -23,7 +21,7 @@ package com.lunarraid.wargame.simulation.view.chits
         private var _displayObject:Sprite;
         
         private var _spriteSheet:String;
-        private var _backgroundSkin:String;
+        private var _color:uint;
         private var _icon:String;
         private var _label1:String;
         private var _label2:String;
@@ -49,7 +47,7 @@ package com.lunarraid.wargame.simulation.view.chits
         {
         	if ( _health == value ) return;
         	_health = value < 0 ? 0 : ( value > 1 ? 1 : value );
-        	_healthBarFill.rotation = Math.PI * value;
+        	if ( _healthBarFill ) _healthBarFill.rotation = Math.PI * value;
         }
         
         public function get morale():Number
@@ -61,7 +59,7 @@ package com.lunarraid.wargame.simulation.view.chits
         {
         	if ( _morale == value ) return;
         	_morale = value < 0 ? 0 : ( value > 1 ? 1 : value );
-        	_moraleBarFill.rotation = -Math.PI * ( 1 - value );
+        	if ( _moraleBarFill ) _moraleBarFill.rotation = -Math.PI * ( 1 - value );
         }
         
         //--------------------------------------
@@ -81,10 +79,10 @@ package com.lunarraid.wargame.simulation.view.chits
             super.onRemove();
         }
         
-        public function configure( spriteSheet:String, backgroundSkin:String, icon:String, label1:String, label2:String, starCount:int ):void
+        public function configure( spriteSheet:String, color:uint, icon:String, label1:String, label2:String, starCount:int ):void
         {
             _spriteSheet = spriteSheet;
-            _backgroundSkin = backgroundSkin;
+            _color = color;
             _icon = icon;
             _label1 = label1;
             _label2 = label2;
@@ -114,6 +112,7 @@ package com.lunarraid.wargame.simulation.view.chits
             _healthBarFill = new Sprite();
             _healthBarFill.addChild( createSpriteQuarter( "chit-fill", 0, 0x00ff00 ) );
             _healthBarFill.addChild( createSpriteQuarter( "chit-fill", 3, 0x00ff00 ) );
+            _healthBarFill.rotation = Math.PI * ( 1 - _health );
             
             healthBarContainer.addChild( _healthBarFill );
             
@@ -127,12 +126,13 @@ package com.lunarraid.wargame.simulation.view.chits
             _moraleBarFill = new Sprite();
             _moraleBarFill.addChild( createSpriteQuarter( "chit-fill", 1, 0xff0000 ) );
             _moraleBarFill.addChild( createSpriteQuarter( "chit-fill", 2, 0xff0000 ) );
+            _moraleBarFill.rotation = -Math.PI * ( 1 - _morale );
             
             moraleBarContainer.addChild( _moraleBarFill );
             
             _displayObject.addChild( moraleBarContainer );
             
-            for ( var i:int = 0; i < 4; i++ ) _displayObject.addChild( createSpriteQuarter( "chit-corner", i, 0x1B70FE ) );
+            for ( var i:int = 0; i < 4; i++ ) _displayObject.addChild( createSpriteQuarter( "chit-corner", i, _color ) );
             
             var icon:TextureAtlasSprite = new TextureAtlasSprite();
             icon.atlasName = _spriteSheet;
@@ -172,9 +172,6 @@ package com.lunarraid.wargame.simulation.view.chits
             starContainer.y = 46;
             
             _displayObject.addChild( starContainer );
-			
-			health = 0.5;
-			morale = 0.75;            
         }
         
         private function clearRenderers():void

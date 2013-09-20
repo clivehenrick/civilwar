@@ -105,7 +105,7 @@ package org.gestouch.gestures
 				if (slop > 0)
 				{
 					// adjust _transformVector to avoid initial "jump"
-					const slopVector:Point = currTransformVector.clone();
+					const slopVector:Point = currTransformVector;
 					slopVector.normalize(_initialDistance + (d >= 0 ? slop : -slop));
 					_transformVector = slopVector;
 				}

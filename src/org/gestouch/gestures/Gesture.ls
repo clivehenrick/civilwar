@@ -205,7 +205,7 @@ package org.gestouch.gestures
 		 */
 		public function get location():Point
 		{
-			return _location.clone();
+			return _location;
 		}
 		
 		
