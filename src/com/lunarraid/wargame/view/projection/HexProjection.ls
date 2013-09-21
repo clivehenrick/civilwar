@@ -1,6 +1,6 @@
-package com.lunarraid.wargame.simulation.view.projection
+package com.lunarraid.wargame.view.projection
 {
-	import com.lunarraid.wargame.simulation.math.Point3;
+	import com.lunarraid.wargame.math.Point3;
 	
 	public class HexProjection implements IProjection
 	{

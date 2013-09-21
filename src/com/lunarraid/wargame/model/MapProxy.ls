@@ -1,6 +1,5 @@
 package com.lunarraid.wargame.model
 {
-	import system.platform.Platform;
     import org.puremvc.as3.patterns.proxy.Proxy;
     
     public class MapProxy extends Proxy
@@ -89,7 +88,7 @@ package com.lunarraid.wargame.model
                     newTile.y = y - Math.floor( x * 0.5 );
                     newTile.terrain = _tileTypes[ "plains" ];
                     
-                    if ( numChits < 10 )
+                    if ( numChits < 30 )
                     {
                         var occupant:ChitVO = new ChitVO();
                         occupant.color = 0x1B70FE;

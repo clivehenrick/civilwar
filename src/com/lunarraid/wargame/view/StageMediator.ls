@@ -1,4 +1,4 @@
-package com.lunarraid.wargame.init.view
+package com.lunarraid.wargame.view
 {
 	import loom2d.display.DisplayObject;
 	import loom2d.display.Stage;

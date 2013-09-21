@@ -1,4 +1,4 @@
-package com.lunarraid.wargame.init.controller
+package com.lunarraid.wargame.controller
 {
 	import system.Debug;
 	import org.puremvc.as3.patterns.command.SimpleCommand;

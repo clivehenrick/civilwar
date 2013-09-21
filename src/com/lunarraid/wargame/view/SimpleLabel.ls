@@ -1,4 +1,4 @@
-package com.lunarraid.wargame.simulation.chits 
+package com.lunarraid.wargame.view
 {
 
 import system.platform.File;

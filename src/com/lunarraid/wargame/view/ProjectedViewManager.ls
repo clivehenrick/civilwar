@@ -1,31 +1,42 @@
-package com.lunarraid.wargame.simulation.view
+package com.lunarraid.wargame.view
 {
 	import loom2d.display.DisplayObject;
 	import loom2d.display.Sprite;
 	import loom2d.events.EnterFrameEvent;
-	import loom2d.math.Point;
-	import system.Math;
-	import com.lunarraid.wargame.simulation.math.Point3;
-	import loom.gameframework.ILoomManager;
-	import loom.gameframework.IAnimated;
-	import loom.gameframework.TimeManager;
-	import com.lunarraid.wargame.simulation.view.projection.*;
 	
-	public class ProjectedViewManager implements ILoomManager
+	import loom2d.math.Point;
+
+	import com.lunarraid.wargame.math.Point3;
+	
+	import com.lunarraid.wargame.view.projection.*;
+	
+	public class ProjectedViewManager
 	{
         //--------------------------------------
 		// PRIVATE / PROTECTED
 		//--------------------------------------
 		
 		private var _viewComponent:Sprite;
-		private var _children:Vector.<ProjectedViewRenderComponent>;
+		private var _children:Vector.<ProjectedViewRenderer>;
 		private var _projection:IProjection;
 		private var _depthSort:Boolean = true;
 		
-		//--------------------------------------
-		//  GETTER/SETTERS
-		//--------------------------------------
-		
+        //--------------------------------------
+        //  CONSTRUCTOR
+        //--------------------------------------
+        
+        public function ProjectedViewManager( projection:IProjection = null )
+        {
+            _projection = new OverheadHexProjection();
+            _viewComponent = new Sprite();
+            _viewComponent.depthSort = _depthSort;
+            _children = [];
+        }
+        
+        //--------------------------------------
+        //  GETTERS / SETTERS
+        //--------------------------------------
+        
 		public function get viewComponent():DisplayObject { return _viewComponent; }
 		
 		public function get projection():IProjection { return _projection; }
@@ -51,14 +62,6 @@ package com.lunarraid.wargame.simulation.view
 		//  PUBLIC METHODS
 		//--------------------------------------
 		
-		public function initialize():void
-		{
-			if ( _projection == null ) _projection = new OverheadHexProjection();
-			_viewComponent = new Sprite();
-			_viewComponent.depthSort = _depthSort;
-			_children = [];
-		}
-		
 		public function destroy():void
 		{
 			_viewComponent.removeChildren();
@@ -67,21 +70,23 @@ package com.lunarraid.wargame.simulation.view
 			_viewComponent = null;
 		}
 		
-		public function addChild( child:ProjectedViewRenderComponent ):void
+		public function addChild( child:ProjectedViewRenderer ):void
 		{
 			if ( _children.indexOf( child ) == -1 )
 			{
 				_children.push( child );
 				_viewComponent.addChild( child.viewComponent );
+				child.viewManager = this;
 				child.updatePosition();
 			}
 		}
 		
-		public function removeChild( child:ProjectedViewRenderComponent ):void
+		public function removeChild( child:ProjectedViewRenderer ):void
 		{
 			var childIndex:int = _children.indexOf( child );
 			if ( childIndex > -1 )
 			{
+				child.viewManager = null;
 				_children.splice( childIndex, 1 );
 				_viewComponent.removeChild( child.viewComponent );
 			}

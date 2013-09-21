@@ -2,9 +2,9 @@ package
 {
 	import loom.graphics.Graphics;
     import com.lunarraid.wargame.GameFacade;
-    import com.lunarraid.wargame.init.controller.StartupCommand;
-    import com.lunarraid.wargame.simulation.view.projection.IsoProjection;
-	import com.lunarraid.wargame.simulation.math.Point3;
+    import com.lunarraid.wargame.controller.StartupCommand;
+    import com.lunarraid.wargame.view.projection.IsoProjection;
+	import com.lunarraid.wargame.math.Point3;
 	
 	import loom.graphics.Graphics;
 	
@@ -21,7 +21,8 @@ package
         {
             super.run();
         	stage.scaleMode = StageScaleMode.NONE;
-        	Graphics.setDebug( Graphics.DEBUG_STATS | Graphics.DEBUG_TEXT );
+            //Graphics.setDebug( Graphics.DEBUG_NONE );
+            //Graphics.setDebug( Graphics.DEBUG_STATS | Graphics.DEBUG_TEXT );
         	GameFacade.getInstance().sendNotification( StartupCommand.NAME, this );
        }
     }

@@ -1,15 +1,14 @@
-package com.lunarraid.wargame.simulation.view
+package com.lunarraid.wargame.view
 {
 	import loom2d.textures.Texture;
 	import loom2d.display.Image;
 	import loom2d.display.DisplayObject;
 	import loom2d.display.Sprite;
 	import loom2d.display.Image;
-	import loom.gameframework.AnimatedComponent;
-	import com.lunarraid.wargame.simulation.math.Point3;
+	import com.lunarraid.wargame.math.Point3;
 	import loom2d.ui.TextureAtlasSprite;
 	
-	public class ProjectedImageRenderComponent extends ProjectedViewRenderComponent
+	public class ProjectedImageRenderer extends ProjectedViewRenderer
 	{
 		//--------------------------------------
 		// CLASS CONSTANTS
@@ -25,7 +24,7 @@ package com.lunarraid.wargame.simulation.view
 		// CONSTRUCTOR
 		//--------------------------------------
 		
-		public function ProjectedImageRenderComponent( url:String )
+		public function ProjectedImageRenderer( url:String )
 		{
 			_url = url;
 		}

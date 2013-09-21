@@ -1,4 +1,4 @@
-package com.lunarraid.wargame.init.controller
+package com.lunarraid.wargame.controller
 {
 	import org.puremvc.as3.patterns.command.MacroCommand;
 	import org.puremvc.as3.interfaces.INotification;

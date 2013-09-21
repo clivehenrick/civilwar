@@ -3,7 +3,7 @@ package com.lunarraid.wargame
 	import org.puremvc.as3.patterns.facade.Facade;
 	import org.puremvc.as3.interfaces.IFacade;
 	
-	import com.lunarraid.wargame.init.controller.StartupCommand;
+	import com.lunarraid.wargame.controller.StartupCommand;
 
 	public class GameFacade extends Facade
 	{

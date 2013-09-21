@@ -1,7 +1,7 @@
-package com.lunarraid.wargame.simulation.chits
+package com.lunarraid.wargame.view
 {
 	import system.Number;
-    import com.lunarraid.wargame.simulation.view.*;
+    import com.lunarraid.wargame.view.*;
     
     import loom2d.display.DisplayObject;
     import loom2d.display.Image;
@@ -12,7 +12,7 @@ package com.lunarraid.wargame.simulation.chits
     import loom2d.math.Point;
     import loom2d.math.Rectangle;
     
-    public class ChitRenderComponent extends ProjectedViewRenderComponent
+    public class ChitRenderer extends ProjectedViewRenderer
     {
         //--------------------------------------
         // PRIVATE / PROTECTED
@@ -33,6 +33,14 @@ package com.lunarraid.wargame.simulation.chits
         
         private var _health:Number;
         private var _morale:Number;
+        
+        //--------------------------------------
+        //  CONSTRUCTOR
+        //--------------------------------------
+        
+        public function ChitRenderer()
+        {
+        }
         
         //--------------------------------------
         //  GETTERS / SETTERS
@@ -66,17 +74,10 @@ package com.lunarraid.wargame.simulation.chits
         //  PUBLIC METHODS
         //--------------------------------------
         
-        override public function onAdd():Boolean
-        {
-            var returnValue:Boolean = super.onAdd();
-            createRenderers();
-            return returnValue;
-        }
-        
-        override public function onRemove():void
+        override public function dispose():void
         {
             clearRenderers();
-            super.onRemove();
+            super.dispose();
         }
         
         public function configure( spriteSheet:String, color:uint, icon:String, label1:String, label2:String, starCount:int ):void
@@ -87,7 +88,7 @@ package com.lunarraid.wargame.simulation.chits
             _label1 = label1;
             _label2 = label2;
             _starCount = starCount;
-            if ( owner ) createRenderers();
+            createRenderers();
         }
                 
         //--------------------------------------
@@ -141,22 +142,6 @@ package com.lunarraid.wargame.simulation.chits
             
             _displayObject.addChild( icon );
             
-            // TODO : Make better label system <rcook 7/29/2013>
-            
-            var label1:SimpleLabel = new SimpleLabel( "assets/fonts/Curse-hd.fnt" );
-            label1.text = _label1;
-            label1.scale = 0.3;
-            label1.center();
-            label1.y = -50;
-            _displayObject.addChild( label1 ); 
-            
-            var label2:SimpleLabel = new SimpleLabel( "assets/fonts/Curse-hd.fnt" );
-            label2.text = _label2;
-            label2.scale = 0.3;
-            label2.center();
-            label2.y = -25;
-            _displayObject.addChild( label2 ); 
-            
             var starContainer:Sprite = new Sprite();
             
             for ( var j:int = 0; j < _starCount; j++ )
@@ -172,6 +157,22 @@ package com.lunarraid.wargame.simulation.chits
             starContainer.y = 46;
             
             _displayObject.addChild( starContainer );
+            
+            // TODO : Make better label system <rcook 7/29/2013>
+            
+            var label1:SimpleLabel = new SimpleLabel( "assets/fonts/Curse-hd.fnt" );
+            label1.text = _label1;
+            label1.scale = 0.3;
+            label1.center();
+            label1.y = -50;
+            _displayObject.addChild( label1 ); 
+            
+            var label2:SimpleLabel = new SimpleLabel( "assets/fonts/Curse-hd.fnt" );
+            label2.text = _label2;
+            label2.scale = 0.3;
+            label2.center();
+            label2.y = -25;
+            _displayObject.addChild( label2 ); 
         }
         
         private function clearRenderers():void

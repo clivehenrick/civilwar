@@ -1,16 +1,15 @@
-package com.lunarraid.wargame.simulation.view
+package com.lunarraid.wargame.view
 {
 	import loom2d.display.DisplayObject;
 	import loom.gameframework.AnimatedComponent;
-	import com.lunarraid.wargame.simulation.math.Point3;
+	import com.lunarraid.wargame.math.Point3;
 	
-	public class ProjectedViewRenderComponent extends AnimatedComponent
+	public class ProjectedViewRenderer
 	{
-		//--------------------------------------
-		// INJECTIONS
-		//--------------------------------------
+        //--------------------------------------
+        // PUBLIC
+        //--------------------------------------
 		
-		[Inject]
 		public var viewManager:ProjectedViewManager;
 		
 		//--------------------------------------
@@ -20,12 +19,20 @@ package com.lunarraid.wargame.simulation.view
 		protected var _viewComponent:DisplayObject;
 		protected var _position:Point3 = new Point3();
 		protected var _scratchPoint:Point3 = new Point3();
-		protected var _isDirty:Boolean = false;
 		
-		//--------------------------------------
-		//  GETTER/SETTERS
-		//--------------------------------------
-		
+        //--------------------------------------
+        //  CONSTRUCTOR
+        //--------------------------------------
+        
+        public function ProjectedViewRenderer()
+        {
+            _viewComponent = createDisplayObject();
+        }
+        
+        //--------------------------------------
+        //  GETTER/SETTERS
+        //--------------------------------------
+        
 		public function get viewComponent():DisplayObject { return _viewComponent; }
 		
 		public function get x():Number { return _position.x; }
@@ -34,7 +41,7 @@ package com.lunarraid.wargame.simulation.view
 		{
 			if ( _position.x == value ) return;
 			_position.x = value;
-			_isDirty = true;
+            updatePosition();
 		}
 		
 		public function get y():Number { return _position.y; }
@@ -43,7 +50,7 @@ package com.lunarraid.wargame.simulation.view
 		{
 			if ( _position.y == value ) return;
 			_position.y = value;
-			_isDirty = true;
+			updatePosition();
 		}
 
 		public function get z():Number { return _position.z; }
@@ -52,34 +59,18 @@ package com.lunarraid.wargame.simulation.view
 		{
 			if ( _position.z == value ) return;
 			_position.z = value;
-			_isDirty = true;
+            updatePosition();
 		}
 		
 		//--------------------------------------
 		//  PUBLIC METHODS
 		//--------------------------------------
 		
-		override public function onAdd():Boolean
+		public function dispose():void
 		{
-			super.onAdd();
-			_viewComponent = createDisplayObject();
-        	updatePosition();
-        	viewManager.addChild( this );
-        	return true;
-		}
-		
-		override public function onRemove():void
-		{
-			viewManager.removeChild( this );
+			if ( viewManager ) viewManager.removeChild( this );
 			if ( _viewComponent ) _viewComponent.dispose();
 			_viewComponent = null;
-			super.onRemove();
-		}
-		
-		override public function onFrame():void
-		{
-			super.onFrame();
-			if ( _isDirty ) updatePosition();
 		}
 		
 		public function updatePosition():void
@@ -90,7 +81,6 @@ package com.lunarraid.wargame.simulation.view
 			_viewComponent.x = _scratchPoint.x;
 			_viewComponent.y = _scratchPoint.y;
 			_viewComponent.depth = _scratchPoint.z * 100 - _position.z;
-			_isDirty = false;
 		}
 		
 		//--------------------------------------

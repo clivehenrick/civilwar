@@ -1,8 +1,6 @@
-package com.lunarraid.wargame.simulation.controller
+package com.lunarraid.wargame.view
 {
     import system.platform.Platform;
-    
-    import loom.gameframework.ILoomManager;
     
     import loom2d.Loom2D;
     
@@ -20,7 +18,7 @@ package com.lunarraid.wargame.simulation.controller
     import loom2d.animation.Tween;
     import loom2d.animation.Transitions;
     
-    public class GestureManager implements ILoomManager
+    public class GestureManager
     {
         private static const PAN_THRESHOLD_MS:int = 33;
         
@@ -70,14 +68,6 @@ package com.lunarraid.wargame.simulation.controller
             _motionTarget = value;
         }
         
-        public function initialize():void
-        {
-        }
-            
-        public function destroy():void
-        {
-        }
-
         private function onPanStart( e:GestureEvent ):void
         {
             Loom2D.juggler.removeTweens( _motionTarget );

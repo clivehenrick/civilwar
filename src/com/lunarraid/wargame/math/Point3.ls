@@ -1,4 +1,4 @@
-package com.lunarraid.wargame.simulation.math
+package com.lunarraid.wargame.math
 {
 	import system.String;
 	
