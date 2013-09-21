@@ -108,7 +108,7 @@ package com.lunarraid.wargame.view
             var healthBarContainer:Sprite = new Sprite();
             healthBarContainer.addChild( createSpriteQuarter( "chit-fill", 0, 0x009900 ) );
             healthBarContainer.addChild( createSpriteQuarter( "chit-fill", 3, 0x009900 ) );
-            healthBarContainer.clipRect = healthBarContainer.getBounds( healthBarContainer );
+            //healthBarContainer.clipRect = healthBarContainer.getBounds( healthBarContainer );
             
             _healthBarFill = new Sprite();
             _healthBarFill.addChild( createSpriteQuarter( "chit-fill", 0, 0x00ff00 ) );

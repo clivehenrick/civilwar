@@ -101,7 +101,9 @@ package com.lunarraid.wargame.model
                         numChits++;
                     }
                     
-                    _tileMap[ getHash( newTile.x, newTile.y ) ] = newTile;
+                    var tileId:int = getHash( newTile.x, newTile.y );
+                    if ( _tileMap[ tileId ] != null ) trace( "TILE FOUND WHERE IT DOESN'T BELONG" );
+                    _tileMap[ tileId ] = newTile;
                 }
             }
             
@@ -123,6 +125,5 @@ package com.lunarraid.wargame.model
                 _tileTypes[ tile.type ] = tile;
             }
         }
-        
     }    
 }

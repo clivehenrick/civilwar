@@ -8,6 +8,8 @@ package com.lunarraid.wargame.view.projection
 		// PRIVATE / PROTECTED
 		//--------------------------------------
 		
+		private static var _scratchPoint:Point3;
+		
 		private var _tileWidth:int;
 		
 		// PROJECTION PRECALCULATION
@@ -42,42 +44,39 @@ package com.lunarraid.wargame.view.projection
 		//  PUBLIC METHODS
 		//--------------------------------------
 		
-		public function project( position:Point3, modifyOriginal:Boolean=true ):Point3
+		public function project( position:Point3 ):Point3
 		{
-			var resultX:Number = position.x * _projectXMultiplier;
-			var resultY:Number = ( position.x * 0.5 + position.y ) * _projectYMultiplier;
-			var result:Point3 = modifyOriginal ? position : new Point3();
-			result.setTo( resultX, resultY, position.z );
-			return result;
+			_scratchPoint.x = position.x * _projectXMultiplier;
+			_scratchPoint.y = ( position.x * 0.5 + position.y ) * _projectYMultiplier;
+			_scratchPoint.z = position.z;
+			return _scratchPoint;
 		}
 		
-		public function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3
+		public function unproject( position:Point3 ):Point3
 		{
-			var resultX:Number = position.x * _unprojectXMultiplier;
-			var resultY:Number = ( position.y * _unprojectYMultiplier ) - ( resultX * 0.5 );
-			var result:Point3 = modifyOriginal ? position : new Point3();
-			result.setTo( resultX, resultY, position.z );
-			return result;
+			_scratchPoint.x = position.x * _unprojectXMultiplier;
+			_scratchPoint.y = ( position.y * _unprojectYMultiplier ) - ( _scratchPoint.x * 0.5 );
+			_scratchPoint.z = position.z;
+			return _scratchPoint;
 		}
 		
+		/*  Save this for later -- <rcook 9/21/2013>
 		public function roundCoordinates( position:Point3, modifyOriginal:Boolean=true ):Point3
 		{
-			var resultX:int = Math.round( position.x );
-			var resultY:int = Math.round( position.y );
-			var resultZ:int = Math.round( -position.x - position.y );
+			_scratchPoint.x = Math.round( position.x );
+			_scratchPoint.y = Math.round( position.y );
+			_scratchPoint.z = Math.round( -position.x - position.y );
 		
-		    var xErr:Number = Math.abs( resultX - position.x );
-		    var yErr:Number = Math.abs( resultY - position.y );
-		    var zErr:Number = Math.abs( resultZ + position.x + position.y );
+		    var xErr:Number = Math.abs( _scratchPoint.x - position.x );
+		    var yErr:Number = Math.abs( _scratchPoint.y - position.y );
+		    var zErr:Number = Math.abs( _scratchPoint.z + position.x + position.y );
 		
-		    if ( xErr > yErr && xErr > zErr ) resultX = -resultY - resultZ;
-		    else if ( yErr > zErr ) resultY = -resultX - resultZ;
-		    else resultZ = -resultX - resultY;
+		    if ( xErr > yErr && xErr > zErr ) _scratchPoint.x = -_scratchPoint.y - _scratchPoint.z;
+		    else if ( yErr > zErr ) _scratchPoint.y = -_scratchPoint.x - _scratchPoint.z;
+		    else _scratchPoint.z = -_scratchPoint.x - _scratchPoint.y;
 		
-			var result:Point3 = modifyOriginal ? position : new Point3();
-			result.setTo( resultX, resultY, position.z );
-			
-		    return result;			
+		    return _scratchPoint;			
 		}
+		*/
 	}
 }

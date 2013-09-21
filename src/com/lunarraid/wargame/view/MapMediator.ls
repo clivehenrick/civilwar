@@ -28,6 +28,7 @@ package com.lunarraid.wargame.view
         private var _projectedViewManager:ProjectedViewManager;
         private var _gestureManager:GestureManager;
         private var _bgQuad:Quad;
+        private var _tiles:Dictionary.<int, ProjectedAtlasSpriteRenderer>;
         
         public function MapMediator()
         {
@@ -66,14 +67,18 @@ package com.lunarraid.wargame.view
             trace( "GENERATING TILEMAP RENDERERS" );
             var startTime:int = Platform.getTime();
             
-            for each( var tile:MapHexTileVO in map )
+            _tiles = {};
+            
+            for ( var tileId:int in map )
             {
+                var tile:MapHexTileVO = map[ tileId ];
                 var hexRenderer:ProjectedAtlasSpriteRenderer = new ProjectedAtlasSpriteRenderer();
                 hexRenderer.atlasName = "sprites";
                 hexRenderer.textureName = tile.terrain.assetId;
                 hexRenderer.x = tile.x;
                 hexRenderer.y = tile.y;
                 _projectedViewManager.addChild( hexRenderer );
+                _tiles[ tileId ] = hexRenderer;
                 if ( tile.occupant ) addChit( tile.occupant, tile.x, tile.y );
             }
             
@@ -95,8 +100,12 @@ package com.lunarraid.wargame.view
         
         private function onTap( location:Point ):void
         {
-            var mapPoint:Point3 = new Point3( location.x - _projectedViewManager.viewComponent.x, location.y - _projectedViewManager.viewComponent.y, 0 );
-            _projectedViewManager.unproject( mapPoint );
+            var mapPoint:Point3 = new Point3( location.x, location.y ); 
+            mapPoint = _projectedViewManager.unproject( mapPoint );
+            mapPoint.x = Math.round( mapPoint.x );
+            mapPoint.y = Math.round( mapPoint.y );
+            var tileId:int = mapProxy.getHash( mapPoint.x, mapPoint.y );
+            if ( _tiles[ tileId ] ) _tiles[ tileId ].textureName = "water";
             trace( "TAPPED " + mapPoint ); 
         }
         

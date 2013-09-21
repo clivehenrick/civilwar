@@ -21,8 +21,8 @@ package
         {
             super.run();
         	stage.scaleMode = StageScaleMode.NONE;
-            //Graphics.setDebug( Graphics.DEBUG_NONE );
-            //Graphics.setDebug( Graphics.DEBUG_STATS | Graphics.DEBUG_TEXT );
+            Graphics.setDebug( Graphics.DEBUG_NONE );
+            Graphics.setDebug( Graphics.DEBUG_STATS | Graphics.DEBUG_TEXT );
         	GameFacade.getInstance().sendNotification( StartupCommand.NAME, this );
        }
     }

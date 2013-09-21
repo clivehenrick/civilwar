@@ -2,18 +2,20 @@ package com.lunarraid.wargame.math
 {
 	import system.String;
 	
-    public class Point3 
+    public struct Point3 
     {
         public var x:Number;
         public var y:Number;
         public var z:Number;
 
-        public function Point3(x:Number = 0, y:Number = 0, z:Number = 0)
+        private static var _scratchPoint:Point3;
+        
+        public function Point3( x:Number = 0, y:Number = 0, z:Number = 0 )
         {
         	setTo( x, y, z );
         }
 
-        public function setTo(x:Number, y:Number, z:Number):void
+        public function setTo( x:Number, y:Number, z:Number ):void
         {
             this.x = x;
             this.y = y;
@@ -32,23 +34,44 @@ package com.lunarraid.wargame.math
         	z *= value;
         }
         
-        public function subtract( source:Point3 ):void
+        public static operator function +( p1:Point3, p2:Point3 ):Point3
         {
-        	x -= source.x;
-        	y -= source.y;
-        	z -= source.z;
+            _scratchPoint.x = p1.x + p2.x;
+            _scratchPoint.y = p1.y + p2.y;
+            _scratchPoint.z = p1.z + p2.z;
+            return _scratchPoint;
+        }    
+
+        public operator function +=( p:Point3 ):void
+        {
+            x += p.x;
+            y += p.y;
+            z += p.z;
+        }
+
+        public static operator function -( p1:Point3, p2:Point3 ):Point3
+        {
+            _scratchPoint.x = p1.x - p2.x;
+            _scratchPoint.y = p1.y - p2.y;
+            _scratchPoint.z = p1.z - p2.z;
+            return _scratchPoint;
+        }    
+
+        public operator function -=( p:Point3 ):void
+        {
+            x -= p.x;
+            y -= p.y;
+            z -= p.z;
         }
         
-        public function clone():Point3
+        public static operator function =( p1:Point3, p2:Point3 ):Point3
         {
-        	return new Point3( x, y, z );
-        }
-        
-        public function copyFrom( source:Point3 ):void
-        {
-        	setTo( source.x, source.y, source.z );
-        }
-        
+            p1.x = p2.x;
+            p1.y = p2.y;
+            p1.z = p2.z;
+            return p1;
+        }        
+            
         public function toString():String
         {
         	return "{ x: " + x + ", y: " + y + ", z: " + z + " }"; 

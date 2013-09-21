@@ -6,6 +6,7 @@ package com.lunarraid.wargame.view
     
     import loom2d.display.DisplayObject;
     import loom2d.math.Point;
+    import loom2d.math.Matrix;
     
     import org.gestouch.core.Gestouch;
     
@@ -106,8 +107,8 @@ package com.lunarraid.wargame.view
         
         private function onPanEnd( e:GestureEvent ):void
         {
-			return; // for now, fix inertial scroll later
-			           
+            return; // for now, fix inertial scroll later
+                       
             if ( !_motionTarget ) return;
             
             var tween:Tween = new Tween( _motionTarget, 1.0, Transitions.EASE_OUT );
@@ -118,7 +119,13 @@ package com.lunarraid.wargame.view
         
         private function onTargetTap( e:GestureEvent ):void
         {
-            if ( _onTap ) _onTap( TapGesture( e.target ).location );
+            var matrix:Matrix = new Matrix();
+            Loom2D.stage.getTargetTransformationMatrix( motionTarget, matrix );
+            //motionTarget.getTargetTransformationMatrix( Loom2D.stage, matrix );
+            trace( "MATRIX: " + matrix );
+            var location:Point = TapGesture( e.target ).location;
+            location = matrix.transformCoord( location.x, location.y );
+            if ( _onTap ) _onTap( location );
         }
     }
 }

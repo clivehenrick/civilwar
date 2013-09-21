@@ -76,8 +76,7 @@ package com.lunarraid.wargame.view
 		public function updatePosition():void
 		{
 			if ( !viewManager ) return;
-			_scratchPoint.copyFrom( _position );
-			viewManager.project( _scratchPoint );
+			_scratchPoint = viewManager.project( _position );
 			_viewComponent.x = _scratchPoint.x;
 			_viewComponent.y = _scratchPoint.y;
 			_viewComponent.depth = _scratchPoint.z * 100 - _position.z;

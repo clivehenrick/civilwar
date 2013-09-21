@@ -8,6 +8,8 @@ package com.lunarraid.wargame.view.projection
 		// PRIVATE / PROTECTED
 		//--------------------------------------
 		
+		private static var _scratchPoint:Point3;
+		
 		private var _tileWidth:int;
 		
 		//--------------------------------------
@@ -27,30 +29,20 @@ package com.lunarraid.wargame.view.projection
 		//  PUBLIC METHODS
 		//--------------------------------------
 		
-		public function project( position:Point3, modifyOriginal:Boolean=true ):Point3
+		public function project( position:Point3 ):Point3
 		{
-			var result:Point3 = modifyOriginal ? position : new Point3();
-			var resultX:Number = ( position.x - position.y ) * _tileWidth * 0.5;
-			var resultY:Number = ( position.x + position.y + position.z + position.z ) * _tileWidth * 0.25;
-			var resultZ:Number = resultY - position.z * _tileWidth * 0.5;
-			result.setTo( resultX, resultY, resultZ );
-			return result;
+			_scratchPoint.x = ( position.x - position.y ) * _tileWidth * 0.5;
+			_scratchPoint.y = ( position.x + position.y + position.z + position.z ) * _tileWidth * 0.25;
+			_scratchPoint.z = _scratchPoint.y - position.z * _tileWidth * 0.5;
+			return _scratchPoint;
 		}
 		
-		public function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3
+		public function unproject( position:Point3 ):Point3
 		{
-			var result:Point3 = modifyOriginal ? position : new Point3();
-			var resultZ:Number = ( position.y - position.z ) / ( _tileWidth * 0.5 );
-			var resultX:Number = ( position.z + position.z + position.x ) / _tileWidth;
-			var resultY:Number = ( position.z + position.z - position.x ) / _tileWidth;
-			result.setTo( resultX, resultY, resultZ );
-			return result;
-		}
-		
-		function roundCoordinates( position:Point3, modifyOriginal:Boolean=true ):Point3
-		{
-			Debug.assert( false, "NOT YET IMPLEMENTED" );
-			return null;
+			_scratchPoint.z = ( position.y - position.z ) / ( _tileWidth * 0.5 );
+			_scratchPoint.x = ( position.z + position.z + position.x ) / _tileWidth;
+			_scratchPoint.y = ( position.z + position.z - position.x ) / _tileWidth;
+			return _scratchPoint;
 		}
 	}
 }

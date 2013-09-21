@@ -92,8 +92,8 @@ package com.lunarraid.wargame.view
 			}
 		}
 		
-		public function project( position:Point3, modifyOriginal:Boolean=true ):Point3 { return _projection.project( position, modifyOriginal ); }
-		public function unproject( position:Point3, modifyOriginal:Boolean=true ):Point3 { return _projection.unproject( position, modifyOriginal ); }
+		public function project( position:Point3 ):Point3 { return _projection.project( position ); }
+		public function unproject( position:Point3 ):Point3 { return _projection.unproject( position ); }
 		
 		//--------------------------------------
 		//  PRIVATE / PROTECTED METHODS
