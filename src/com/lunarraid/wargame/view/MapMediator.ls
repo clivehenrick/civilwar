@@ -15,27 +15,45 @@ package com.lunarraid.wargame.view
     import com.lunarraid.wargame.model.MapTerrainVO;
     import com.lunarraid.wargame.model.MapHexTileVO;
     
-    import com.lunarraid.wargame.view.ProjectedViewManager;
-    import com.lunarraid.wargame.view.ProjectedAtlasSpriteRenderer;
-    
     import com.lunarraid.wargame.math.Point3;
     
     public class MapMediator extends Mediator
     {
+        //--------------------------------------
+        // CLASS CONSTANTS
+        //--------------------------------------
+        
         public static const NAME:String = "MapMediator";
 
+        //--------------------------------------
+        // PRIVATE / PROTECTED
+        //--------------------------------------
+        
         private var _viewComponent:Sprite;
         private var _projectedViewManager:ProjectedViewManager;
         private var _gestureManager:GestureManager;
         private var _bgQuad:Quad;
         private var _tiles:Dictionary.<int, ProjectedAtlasSpriteRenderer>;
+        private var _tapPoint:Point3;
+        
+        //--------------------------------------
+        // CONSTRUCTOR
+        //--------------------------------------
         
         public function MapMediator()
         {
             super( NAME );
         }
         
+        //--------------------------------------
+        // GETTERS / SETTERS
+        //--------------------------------------
+        
         private function get mapProxy():MapProxy { return facade.retrieveProxy( MapProxy.NAME ) as MapProxy; }
+        
+        //--------------------------------------
+        //  PUBLIC METHODS
+        //--------------------------------------
         
         override public function onRegister():void
         {
@@ -44,6 +62,10 @@ package com.lunarraid.wargame.view
             setViewComponent( _viewComponent );
             initialize();
         }
+        
+        //--------------------------------------
+        //  PRIVATE / PROTECTED METHODS
+        //--------------------------------------
         
         private function initialize():void
         {
@@ -100,13 +122,13 @@ package com.lunarraid.wargame.view
         
         private function onTap( location:Point ):void
         {
-            var mapPoint:Point3 = new Point3( location.x, location.y ); 
-            mapPoint = _projectedViewManager.unproject( mapPoint );
-            mapPoint.x = Math.round( mapPoint.x );
-            mapPoint.y = Math.round( mapPoint.y );
-            var tileId:int = mapProxy.getHash( mapPoint.x, mapPoint.y );
+            _tapPoint.setTo( location.x, location.y, 0 );
+            _tapPoint = _projectedViewManager.unproject( _tapPoint );
+            _tapPoint.x = Math.round( _tapPoint.x );
+            _tapPoint.y = Math.round( _tapPoint.y );
+            var tileId:int = mapProxy.getHash( _tapPoint.x, _tapPoint.y );
             if ( _tiles[ tileId ] ) _tiles[ tileId ].textureName = "water";
-            trace( "TAPPED " + mapPoint ); 
+            trace( "TAPPED " + _tapPoint ); 
         }
         
     }

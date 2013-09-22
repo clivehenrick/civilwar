@@ -8,15 +8,31 @@ package com.lunarraid.wargame.view
 	
 	public class StageMediator extends Mediator
 	{
+        //--------------------------------------
+        // CLASS CONSTANTS
+        //--------------------------------------
+        
 		public static const MEDIATOR_NAME:String = "StageMediator";
 		
+        //--------------------------------------
+        // PRIVATE / PROTECTED
+        //--------------------------------------
+        
 		private var _layers:Vector.<IMediator> = [];
 		
+        //--------------------------------------
+        // CONSTRUCTOR
+        //--------------------------------------
+        
 		public function StageMediator()
 		{
 			super( MEDIATOR_NAME, Loom2D.stage );
 		}
 		
+        //--------------------------------------
+        //  PUBLIC METHODS
+        //--------------------------------------
+        
 		public function appendLayer( layerMediator:IMediator ):void
 		{
 			facade.registerMediator( layerMediator );
