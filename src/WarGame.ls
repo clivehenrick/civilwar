@@ -20,6 +20,7 @@ package
         override public function run():void
         {
             super.run();
+            
         	stage.scaleMode = StageScaleMode.NONE;
             Graphics.setDebug( Graphics.DEBUG_NONE );
             Graphics.setDebug( Graphics.DEBUG_STATS | Graphics.DEBUG_TEXT );

@@ -3,6 +3,7 @@ package com.lunarraid.wargame.model
     public class ChitVO
     {
         public var color:uint;
+        public var type:String;
         public var name:String;
         public var commander:String;
         public var experience:int;
@@ -13,6 +14,7 @@ package com.lunarraid.wargame.model
         {
             var result:ChitVO = new ChitVO();
             result.color = data[ "color" ] as uint;
+            result.type = data[ "type" ] as String;
             result.name = data[ "name" ] as String;
             result.commander = data[ "commander" ] as String;
             result.experience = data[ "experience" ] as int;

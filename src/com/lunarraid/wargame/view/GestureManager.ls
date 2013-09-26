@@ -25,6 +25,7 @@ package com.lunarraid.wargame.view
         
         private var _panGesture:PanGesture;
         private var _tapGesture:TapGesture;
+        private var _zoomGesture:ZoomGesture;
         private var _touchTarget:DisplayObject;
         private var _motionTarget:DisplayObject;
         
@@ -34,6 +35,8 @@ package com.lunarraid.wargame.view
         private var _panDeltaTime:int;
         private var _lastPanDistance:Point;
         private var _panVelocity:Point;
+        
+        private var _matrix:Matrix = new Matrix();
         
         public function GestureManager()
         {
@@ -45,7 +48,10 @@ package com.lunarraid.wargame.view
             
             _tapGesture = new TapGesture();
             _tapGesture.numTapsRequired = 1;
-            _tapGesture.addEventListener( GestureEvent.GESTURE_RECOGNIZED, onTargetTap );            
+            _tapGesture.addEventListener( GestureEvent.GESTURE_RECOGNIZED, onTargetTap );
+            
+            _zoomGesture = new ZoomGesture();
+            _zoomGesture.addEventListener( GestureEvent.GESTURE_CHANGED, onZoom );
         }
         
         public function get onTap():Function { return _onTap; }
@@ -59,6 +65,7 @@ package com.lunarraid.wargame.view
             _touchTarget = value;
             _panGesture.target = value;
             _tapGesture.target = value;
+            _zoomGesture.target = value;
         }
         
         public function get motionTarget():DisplayObject { return _motionTarget; }
@@ -119,13 +126,28 @@ package com.lunarraid.wargame.view
         
         private function onTargetTap( e:GestureEvent ):void
         {
-            var matrix:Matrix = new Matrix();
-            Loom2D.stage.getTargetTransformationMatrix( motionTarget, matrix );
-            //motionTarget.getTargetTransformationMatrix( Loom2D.stage, matrix );
-            trace( "MATRIX: " + matrix );
+            Loom2D.stage.getTargetTransformationMatrix( motionTarget, _matrix );
             var location:Point = TapGesture( e.target ).location;
-            location = matrix.transformCoord( location.x, location.y );
+            location = _matrix.transformCoord( location.x, location.y );
             if ( _onTap ) _onTap( location );
         }
+        
+        private function onZoom( e:GestureEvent ):void
+        {
+            var zoom:ZoomGesture = e.target as ZoomGesture;
+            // TODO: No idea why this works without the globalToLocal, will probably have to come back to it. <rcook 9/26/2013>
+            //var location:Point = _motionTarget.globalToLocal( zoom.location );
+            var location:Point = zoom.location;
+            
+            _motionTarget.getTargetTransformationMatrix( _motionTarget.parent, _matrix );
+            _matrix.translate( -location.x, -location.y );
+            _matrix.scale( zoom.scaleX, zoom.scaleY );
+            _matrix.translate( location.x, location.y );
+            
+            _motionTarget.scaleX = _matrix.a;
+            _motionTarget.scaleY = _matrix.d;
+            _motionTarget.x = _matrix.tx;
+            _motionTarget.y = _matrix.ty;
+        }        
     }
 }

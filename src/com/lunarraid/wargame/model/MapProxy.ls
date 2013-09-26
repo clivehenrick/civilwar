@@ -70,10 +70,10 @@ package com.lunarraid.wargame.model
             
             _tileMap = {};
             
-            var startX:int = Math.floor( -MAP_WIDTH / 2 );
-            var endX:int = Math.floor( MAP_WIDTH / 2 );
-            var startY:int = Math.floor( -MAP_HEIGHT / 2 );
-            var endY:int = Math.floor( MAP_HEIGHT / 2 );
+            var startX:int = 0; // Math.floor( -MAP_WIDTH / 2 );
+            var endX:int = MAP_WIDTH; // Math.floor( MAP_WIDTH / 2 );
+            var startY:int = 0; // Math.floor( -MAP_HEIGHT / 2 );
+            var endY:int = MAP_HEIGHT; // Math.floor( MAP_HEIGHT / 2 );
             
             var numChits:int = 0;
             
@@ -86,12 +86,13 @@ package com.lunarraid.wargame.model
                     var newTile:MapHexTileVO = new MapHexTileVO();
                     newTile.x = x;
                     newTile.y = y - Math.floor( x * 0.5 );
-                    newTile.terrain = _tileTypes[ "plains" ];
+                    newTile.terrain = ( x + y ) % 2 == 1 ? _tileTypes[ "plains" ] : _tileTypes[ "river" ];
                     
                     if ( numChits < 30 )
                     {
                         var occupant:ChitVO = new ChitVO();
                         occupant.color = 0x1B70FE;
+                        occupant.type = numChits % 3 == 0 ? "infantry" : numChits % 3 == 1 ? "cavalry" : "artillery";
                         occupant.name = "NAME";
                         occupant.commander = "COMMANDER";
                         occupant.experience = Math.floor( Math.random() * 3 ) + 1;

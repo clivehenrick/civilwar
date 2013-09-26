@@ -189,9 +189,9 @@ package com.lunarraid.wargame.view
             result.textureName = textureName;
             result.pivotX = result.width - 0.5;
             result.pivotY = result.height - 0.5;
-            result.rotation = ( Math.PI / 2 ) * position;
-            //result.scaleX = position == 0 || position == 3 ? 1 : -1;
-            //result.scaleY = position == 2 || position == 3 ? 1 : -1;
+            //result.rotation = ( Math.PI / 2 ) * position;
+            result.scaleX = position == 0 || position == 3 ? 1 : -1;
+            result.scaleY = position == 2 || position == 3 ? 1 : -1;
             
             if ( tint != 0xffffff ) result.color = tint;
             
